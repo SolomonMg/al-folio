@@ -7,12 +7,71 @@ years: [1956, 1950, 1935, 1905]
 redirect_from: "/research/"
 
 ---
+
+[**Projecting Confidence: How the Probabilistic Horse Race Confuses
+    and Demobilizes the
+    Public**](/assets/pdf/aggregator.pdf). **Journal of Politics, 2020**. With Sean Westwood and Yphtach Lelkes.
+- Cited by [FiveThirthyEight's Politics
+Podcast](https://fivethirtyeight.com/features/politics-podcast-whats-so-wrong-with-nancy-pelosi/)
+as influential in decision to change forecast presentation.
+- Media coverage: [Washington
+Post](https://www.washingtonpost.com/news/politics/wp/2018/02/06/clintons-achilles-heel-in-2016-may-have-been-overconfidence/?utm_term=.b71fb84da00f),
+[New York
+Magazine](http://nymag.com/daily/intelligencer/2018/02/americans-dont-understand-election-probabilities.html),
+[Political
+Wire](https://politicalwire.com/2018/02/06/election-forecasts-lower-voter-turnout/).
+
+
+[**The Facebook Privacy-Protected Full URLs Data Set**](/assets/pdf/Facebook_DP_URLs_Dataset.pdf). **Social Science One, 2020**. With Christina DeGregorio, Bennett Hillenbrand, Gary King, Saurav Mahanti, Zagreb Mukerjee, Chaya Nayak, Nathaniel Persily, Bogdan State, Arjun Wilkins.
+- Largest ever social science data set released, protected using [action-level differential privacy](https://arxiv.org/abs/2002.04049).
+- See also [Social Science One's annoucement](socialscience.one/blog/update-social-science-one).
+- Media coverage: [Science](https://www.sciencemag.org/news/2020/02/researchers-finally-get-access-data-facebook-s-role-political-discourse), [Nature](https://www.nature.com/articles/d41586-019-02966-x), [Poynter](https://www.poynter.org/fact-checking/2019/what-can-researchers-find-among-the-32-million-urls-facebook-just-released-to-social-science-one/), [Wired](https://www.wired.com/story/facebook-social-network-becomes-social-science-subject/), [Financial Times](https://www.ft.com/content/6133b90e-e23f-11e9-9743-db5a370481bc), [Tech Crunch](https://techcrunch.com/2018/07/11/facebook-independent-research-commission-social-science-one-will-share-a-petabyte-of-user-data/),
+[The Verge](https://www.theverge.com/2018/7/11/17561144/facebook-election-research-database-link-proposal).
+
+
+[**Bots in the Twittersphere: An estimated two-thirds of tweeted
+    links to popular websites are posted by automated accounts -- not
+    human beings**](http://www.pewinternet.org/2018/04/09/bots-in-the-twittersphere/)
+    **Pew Research Center**, 2018. With Stefan Wojcik, Aaron Smith, Lee Rainie.
+- Cited by California State Senator Robert Hertzberg in passage of
+SB 1001, making it illegal to create bots that misrepresent identity
+or otherwise deceive people in California.
+- Media coverage:
+[Wired](https://www.wired.com/story/twitter-bots-links/),
+[Vox](https://www.vox.com/technology/2018/4/9/17214720/pew-study-bots-generate-two-thirds-of-twitter-links),
+[USA
+Today](https://www.usatoday.com/story/tech/news/2018/04/09/bots-rampant-twitter-study-says-network-tries-thwart-devious-tweets/492536002/),
+[Observer](http://observer.com/2018/04/report-bots-promote-66-percent-twittersphere-links/),
+[NiemanLab](http://www.niemanlab.org/2018/04/think-your-articles-are-getting-a-lot-of-attention-on-twitter-it-could-be-a-lot-of-posting-by-bots/),
+[TechCrunch](https://techcrunch.com/2018/04/09/bots-on-twitter-share-two-thirds-of-links-to-popular-websites-pew/),
+[VentureBeat](https://venturebeat.com/2018/04/09/pew-twitter-bots-are-behind-66-of-tweeted-links-for-most-popular-sites/),
+[FastCompany](https://www.fastcompany.com/40556233/twitter-bots-are-getting-busy-making-sure-your-tweet-goes-viral).
+
+[**Very liberal or conservative legislators most likely to share news on Facebook**](https://www.pewresearch.org/fact-tank/2018/01/19/very-liberal-or-conservative-legislators-most-likely-to-share-news-on-facebook//). **Pew Research Center**, 2018.
+
 [**Estimating Heterogeneous Treatment Effects and the Effects of
 Heterogeneous Treatments with Ensemble
 Methods**](https://www.cambridge.org/core/journals/political-analysis/article/estimating-heterogeneous-treatment-effects-and-the-effects-of-heterogeneous-treatments-with-ensemble-methods/C7E3EA00D0AD83429CBE73F4F0C6652C)"
 **Political Analysis, 2017**. With Justin Grimmer and Sean Westwood.
-- [Replication materials](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/BQMLQW).
-- [Software implementation](https://github.com/SolomonMg/HetSL) (under development)
+	- [Replication materials](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/BQMLQW).
+	- [Software implementation](https://github.com/SolomonMg/HetSL) (under development)
+
+
+[**Sharing the News in a Polarized Congress**](https://www.people-press.org/2017/12/18/sharing-the-news-in-a-polarized-congress/). **Pew Research Center**, 2017.
+- Media coverage:
+[Politico](https://www.politico.com/story/2017/12/18/pew-study-social-media-political-polarization-302252),
+[Washington
+Post](https://www.washingtonpost.com/news/politics/wp/2017/12/18/how-politicians-use-of-social-media-is-reinforcing-a-partisan-media-divide/),
+[Axios](https://www.axios.com/democrats-are-angrier-than-republicans-on-facebook-1515110686-ba65f9e2-10c3-4b06-b31f-4588fbca9573.html),
+[Quartz](https://qz.com/1161816/facebook-and-politics-reactions-to-posts-by-democrats-got-a-lot-angrier-after-trump-was-elected/).
+
+[**Partisan Conflict and Congressional
+    Outreach**](http://www.people-press.org/2017/02/23/partisan-conflict-and-congressional-outreach/). **Pew Research Center**, 2017.
+- Media coverage: [Washington
+Post](https://www.washingtonpost.com/news/wonk/wp/2017/02/23/republican-lawmakers-go-negative-more-often-than-democrats-according-to-a-first-of-its-kind-analysis/),
+[Mother
+Jones](http://www.motherjones.com/kevin-drum/2017/02/pew-republicans-disagree-and-they-disagree-indignantly/).
+
 
 [**Exposure to ideologically diverse news and opinion on Facebook**](https://www.dropbox.com/s/s7asaz53z8q16lt/Science-2015-Bakshy-1130-2.pdf?raw=true)
 **Science, 2015**. With Eytan Bakshy and Lada A. Adamic 
