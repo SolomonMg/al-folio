@@ -1,6 +1,7 @@
 # -----------------------------------------------------------------------------
 # Site settings
 # -----------------------------------------------------------------------------
+title: Sol Messing
 name: Solomon Messing
 email: firstname.lastname@gmail.com
 description: > # this means to ignore newlines until "url:"
@@ -28,7 +29,7 @@ google_analytics: UA-27273977-1 # out your google-analytics code
 # -----------------------------------------------------------------------------
 # Blog
 # -----------------------------------------------------------------------------
-blog_name: blog
+blog_name: Blog
 blog_description: Thoughts on data visualization, analysis, & scientific research.
 
 # Pagination

@@ -2,7 +2,7 @@
 layout: page
 permalink: /publications/
 title: publications
-description: 
+description: select publications sorted arbitrarily
 years: [1956, 1950, 1935, 1905]
 redirect_from: "/research/"
 
@@ -28,6 +28,46 @@ Wire](https://politicalwire.com/2018/02/06/election-forecasts-lower-voter-turnou
 - Media coverage: [Science](https://www.sciencemag.org/news/2020/02/researchers-finally-get-access-data-facebook-s-role-political-discourse), [Nature](https://www.nature.com/articles/d41586-019-02966-x), [Poynter](https://www.poynter.org/fact-checking/2019/what-can-researchers-find-among-the-32-million-urls-facebook-just-released-to-social-science-one/), [Wired](https://www.wired.com/story/facebook-social-network-becomes-social-science-subject/), [Financial Times](https://www.ft.com/content/6133b90e-e23f-11e9-9743-db5a370481bc), [Tech Crunch](https://techcrunch.com/2018/07/11/facebook-independent-research-commission-social-science-one-will-share-a-petabyte-of-user-data/),
 [The Verge](https://www.theverge.com/2018/7/11/17561144/facebook-election-research-database-link-proposal).
 
+[**Selective Exposure in the Age of Social Media: Endorsements Trump
+Partisan Source Affiliation when Selecting News
+Online**](/assets/pdf/SocialNewsCommRes.pdf)
+**Communication Research, 2014**. With Sean Westwood 
+
+[**Exposure to ideologically diverse news and opinion on Facebook**](/assets/pdf/Science-2015-Bakshy-1130-2.pdf)
+**Science, 2015**. With Eytan Bakshy and Lada A. Adamic 
+- [Review by David Lazer](http://science.sciencemag.org/content/348/6239/1090)
+- [Supplementary materials](http://science.sciencemag.org/highwire/filestream/630053/field_highwire_adjunct_files/1/Bakshy-SM.revision.1.pdf)
+- [Replication materials](http://dx.doi.org/10.7910/DVN/LDJ7MS) 
+- Media: [New York Times](http://www.nytimes.com/2015/05/08/technology/facebook-study-disputes-theory-of-political-polarization-among-users.html?_r=0),
+the [Washington Post](http://www.washingtonpost.com/news/energy-environment/wp/2015/05/07/facebook-study-says-its-mainly-your-fault-not-theirs-that-you-read-things-you-already-agree-with/), the [BBC](http://www.bbc.com/news/science-environment-32606724), [CBS](http://www.cbsnews.com/news/facebooks-news-feed-limits-your-world-view/), [Huffington Post](http://www.huffingtonpost.com/2015/05/12/facebook-study-polarization_n_7245192.html), [Ars Technica](http://arstechnica.com/science/2015/05/dont-just-blame-facebook-we-build-our-own-bubbles/), [Wired
+UK](http://www.wired.co.uk/news/archive/2015-05/08/facebook-echo-chamber-study),
+[The Verge](http://www.theverge.com/2015/5/7/8564795/facebook-online-opinion-filter-bubble-news-feed-study).
+
+[**How Words and Money Cultivate a Personal Vote: The Effect of Legislator Credit Claiming on Constituent Credit Allocation**](/assets/pdf/GrimmerMessingWestwood.pdf)
+**American Political Science Review, 2012**. With Justin Grimmer and Sean Westwood
+- [Supplementary Information](/assets/pdf/ccsup.pdf)
+<!-- - [Presentation Slides](http://stanford.edu/~jgrimmer/ccpres.pdf)  -->
+
+
+[**Bias in the Flesh: Skin Complexion and Stereotype Consistency in
+Political Campaigns**](/assets/pdf/HSVmetricsCampaignsDarknessPOQFINAL.pdf)
+**Public Opinion Quarterly, Forthcoming**. With Maria Jabon and Ethan
+Plaut 
+- [Replication materials](http://dx.doi.org/10.7910/DVN/F0NDJP)
+- Media: [Washington Post Monkey Cage](https://www.washingtonpost.com/news/monkey-cage/wp/2016/01/11/what-color-is-obama-these-researchers-examined-reactions-when-his-skin-looks-darker/), [Washington Post Wonkblog](https://www.washingtonpost.com/news/wonk/wp/2015/12/29/obamas-skin-looks-a-little-different-in-these-gop-campaign-ads/),
+[CBS News](http://www.cbsnews.com/news/study-2008-mccain-attack-ads-darkened-obama-skin-tone/).
+
+
+[**Estimating Heterogeneous Treatment Effects and the Effects of
+Heterogeneous Treatments with Ensemble
+Methods**](/assets/pdf/het.pdf)
+**Political Analysis, 2017**. With Justin Grimmer and Sean Westwood.
+	- [Replication materials](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/BQMLQW).
+	- [Software implementation](https://github.com/SolomonMg/HetSL) (under development)
+
+[**Quantifying Social Media\'s Political Space: Estimating Ideology
+from Publicly Revealed Preferences on Facebook**](/assets/pdf/EstimatingIdeologyFromFacebookPageLikes.pdf)
+**American Political Science Review (APSR), 2015**. With Robert Bond.
 
 [**Bots in the Twittersphere: An estimated two-thirds of tweeted
     links to popular websites are posted by automated accounts -- not
@@ -47,15 +87,12 @@ Today](https://www.usatoday.com/story/tech/news/2018/04/09/bots-rampant-twitter-
 [VentureBeat](https://venturebeat.com/2018/04/09/pew-twitter-bots-are-behind-66-of-tweeted-links-for-most-popular-sites/),
 [FastCompany](https://www.fastcompany.com/40556233/twitter-bots-are-getting-busy-making-sure-your-tweet-goes-viral).
 
-[**Very liberal or conservative legislators most likely to share news on Facebook**](https://www.pewresearch.org/fact-tank/2018/01/19/very-liberal-or-conservative-legislators-most-likely-to-share-news-on-facebook//). **Pew Research Center**, 2018.
-
-[**Estimating Heterogeneous Treatment Effects and the Effects of
-Heterogeneous Treatments with Ensemble
-Methods**](https://www.cambridge.org/core/journals/political-analysis/article/estimating-heterogeneous-treatment-effects-and-the-effects-of-heterogeneous-treatments-with-ensemble-methods/C7E3EA00D0AD83429CBE73F4F0C6652C)"
-**Political Analysis, 2017**. With Justin Grimmer and Sean Westwood.
-	- [Replication materials](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/BQMLQW).
-	- [Software implementation](https://github.com/SolomonMg/HetSL) (under development)
-
+[**Partisan Conflict and Congressional
+    Outreach**](http://www.people-press.org/2017/02/23/partisan-conflict-and-congressional-outreach/). **Pew Research Center**, 2017.
+- Media coverage: [Washington
+Post](https://www.washingtonpost.com/news/wonk/wp/2017/02/23/republican-lawmakers-go-negative-more-often-than-democrats-according-to-a-first-of-its-kind-analysis/),
+[Mother
+Jones](http://www.motherjones.com/kevin-drum/2017/02/pew-republicans-disagree-and-they-disagree-indignantly/).
 
 [**Sharing the News in a Polarized Congress**](https://www.people-press.org/2017/12/18/sharing-the-news-in-a-polarized-congress/). **Pew Research Center**, 2017.
 - Media coverage:
@@ -65,50 +102,8 @@ Post](https://www.washingtonpost.com/news/politics/wp/2017/12/18/how-politicians
 [Axios](https://www.axios.com/democrats-are-angrier-than-republicans-on-facebook-1515110686-ba65f9e2-10c3-4b06-b31f-4588fbca9573.html),
 [Quartz](https://qz.com/1161816/facebook-and-politics-reactions-to-posts-by-democrats-got-a-lot-angrier-after-trump-was-elected/).
 
-[**Partisan Conflict and Congressional
-    Outreach**](http://www.people-press.org/2017/02/23/partisan-conflict-and-congressional-outreach/). **Pew Research Center**, 2017.
-- Media coverage: [Washington
-Post](https://www.washingtonpost.com/news/wonk/wp/2017/02/23/republican-lawmakers-go-negative-more-often-than-democrats-according-to-a-first-of-its-kind-analysis/),
-[Mother
-Jones](http://www.motherjones.com/kevin-drum/2017/02/pew-republicans-disagree-and-they-disagree-indignantly/).
 
-
-[**Exposure to ideologically diverse news and opinion on Facebook**](https://www.dropbox.com/s/s7asaz53z8q16lt/Science-2015-Bakshy-1130-2.pdf?raw=true)
-**Science, 2015**. With Eytan Bakshy and Lada A. Adamic 
-- [Review by David Lazer](http://science.sciencemag.org/content/348/6239/1090)
-- [Supplementary materials](http://science.sciencemag.org/highwire/filestream/630053/field_highwire_adjunct_files/1/Bakshy-SM.revision.1.pdf)
-- [Replication materials](http://dx.doi.org/10.7910/DVN/LDJ7MS) 
-- Media: [New York Times](http://www.nytimes.com/2015/05/08/technology/facebook-study-disputes-theory-of-political-polarization-among-users.html?_r=0),
-the [Washington Post](http://www.washingtonpost.com/news/energy-environment/wp/2015/05/07/facebook-study-says-its-mainly-your-fault-not-theirs-that-you-read-things-you-already-agree-with/), the [BBC](http://www.bbc.com/news/science-environment-32606724), [CBS](http://www.cbsnews.com/news/facebooks-news-feed-limits-your-world-view/), [Huffington Post](http://www.huffingtonpost.com/2015/05/12/facebook-study-polarization_n_7245192.html), [Ars Technica](http://arstechnica.com/science/2015/05/dont-just-blame-facebook-we-build-our-own-bubbles/), [Wired
-UK](http://www.wired.co.uk/news/archive/2015-05/08/facebook-echo-chamber-study),
-[The Verge](http://www.theverge.com/2015/5/7/8564795/facebook-online-opinion-filter-bubble-news-feed-study).
-
-[**The Impression of Influence: Legislator Communication, Representation, and Democratic Accountability**](http://press.princeton.edu/titles/10399.html)
-**Princeton University Press, 2015**. With Justin Grimmer and Sean
-Westwood 
-- Media: [Mischiefs of Faction](http://www.mischiefsoffaction.com/2015/01/its-frequency-not-size-compromise.html).
-
-[**Bias in the Flesh: Skin Complexion and Stereotype Consistency in
-Political Campaigns**](https://www.dropbox.com/s/et4rnj2duzsuhiq/HSVmetricsCampaignsDarknessPOQFINAL.pdf?raw=true)
-**Public Opinion Quarterly, Forthcoming**. With Maria Jabon and Ethan
-Plaut 
-- [Replication materials](http://dx.doi.org/10.7910/DVN/F0NDJP)
-- Media: [Washington Post Monkey Cage](https://www.washingtonpost.com/news/monkey-cage/wp/2016/01/11/what-color-is-obama-these-researchers-examined-reactions-when-his-skin-looks-darker/), [Washington Post Wonkblog](https://www.washingtonpost.com/news/wonk/wp/2015/12/29/obamas-skin-looks-a-little-different-in-these-gop-campaign-ads/),
-[CBS News](http://www.cbsnews.com/news/study-2008-mccain-attack-ads-darkened-obama-skin-tone/).
-
-[**Quantifying Social Media\'s Political Space: Estimating Ideology
-from Publicly Revealed Preferences on Facebook**](https://www.dropbox.com/s/hoeqxex1a8ibhh0/EstimatingIdeologyFromFacebookPageLikes.pdf?raw=true)
-**American Political Science Review (APSR), 2015**. With Robert Bond.
-
-[**Selective Exposure in the Age of Social Media: Endorsements Trump
-Partisan Source Affiliation when Selecting News
-Online**](https://www.dropbox.com/s/0gwmw6ehq54k0i5/SocialNewsCommRes.pdf?raw=true)
-**Communication Research, 2014**. With Sean Westwood 
-
-[**How Words and Money Cultivate a Personal Vote: The Effect of Legislator Credit Claiming on Constituent Credit Allocation**](http://stanford.edu/~jgrimmer/cc.pdf)
-**American Political Science Review, 2012**. With Justin Grimmer and Sean Westwood
-- [Supplementary Information](http://stanford.edu/~jgrimmer/ccsup.pdf)
-- [Presentation Slides](http://stanford.edu/~jgrimmer/ccpres.pdf) 
+[**Very liberal or conservative legislators most likely to share news on Facebook**](https://www.pewresearch.org/fact-tank/2018/01/19/very-liberal-or-conservative-legislators-most-likely-to-share-news-on-facebook//). **Pew Research Center**, 2018.
 
 [**Do Attitudes About Immigration Predict Willingness to Admit Individual
 Immigrants? A Cross-National Test of the Person-Positivity
