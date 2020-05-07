@@ -51,7 +51,7 @@ UK](http://www.wired.co.uk/news/archive/2015-05/08/facebook-echo-chamber-study),
 
 [**Bias in the Flesh: Skin Complexion and Stereotype Consistency in
 Political Campaigns**](/assets/pdf/HSVmetricsCampaignsDarknessPOQFINAL.pdf)
-**Public Opinion Quarterly, Forthcoming**. With Maria Jabon and Ethan
+**Public Opinion Quarterly, 2015**. With Maria Jabon and Ethan
 Plaut 
 - [Replication materials](http://dx.doi.org/10.7910/DVN/F0NDJP)
 - Media: [Washington Post Monkey Cage](https://www.washingtonpost.com/news/monkey-cage/wp/2016/01/11/what-color-is-obama-these-researchers-examined-reactions-when-his-skin-looks-darker/), [Washington Post Wonkblog](https://www.washingtonpost.com/news/wonk/wp/2015/12/29/obamas-skin-looks-a-little-different-in-these-gop-campaign-ads/),
