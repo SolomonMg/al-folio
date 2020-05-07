@@ -1,17 +1,5 @@
-# al-folio
-
-[![build status](https://travis-ci.org/alshedivat/al-folio.svg?branch=master)](https://travis-ci.org/alshedivat/al-folio)
-[![demo](https://img.shields.io/badge/theme-demo-brightgreen.svg)](https://alshedivat.github.io/al-folio/)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/alshedivat/al-folio/blob/master/LICENSE)
-[![gitter](https://badges.gitter.im/alshedivat/al-folio.svg)](https://gitter.im/alshedivat/al-folio?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
-A simple and clean [Jekyll](https://jekyllrb.com/) theme for academics.
-
-[![Screenshot](assets/img/full-screenshot.png)](https://alshedivat.github.io/al-folio/)
-
-Originally, **al-folio** was based on the [\*folio theme](https://github.com/bogoli/-folio) (published by [Lia Bogoev](http://liabogoev.com) and under the MIT license).
-Since then, it got a full re-write of the styles and many additional cool features.
-The emphasis is on whitespace, transparency, and academic usage: [theme demo](https://alshedivat.github.io/al-folio/).
+# A clean theme for social scientists
+(Forked from '[al-folio](https://alshedivat.github.io/al-folio/)')
 
 ## Getting started
 
@@ -20,13 +8,24 @@ Why Jekyll? Read this [blog post](https://karpathy.github.io/2014/07/01/switchin
 
 ### Installation
 
-Assuming you have [Ruby](https://www.ruby-lang.org/en/downloads/) and [Bundler](https://bundler.io/) installed on your system (*hint: for ease of managing ruby gems, consider using [rbenv](https://github.com/rbenv/rbenv)*), first fork the theme from `github.com:alshedivat/al-folio` to `github.com:<your-username>/<your-repo-name>` and do the following:
+Assuming you have a Mac, first install [brew](https://brew.sh/). Install [Ruby](https://www.ruby-lang.org/en/downloads/), gcc, and [Bundler](https://bundler.io/) using brew and [rbenv](https://github.com/rbenv/rbenv)*):
 
 ```bash
-$ git clone git@github.com:<your-username>/<your-repo-name>.git
-$ cd <your-repo-name>
-$ bundle install
-$ bundle exec jekyll serve
+brew update
+brew install rbenv
+brew install ruby-build
+brew tap homebrew/dupes
+brew install autoconf automake apple-gcc42
+```
+
+
+first fork the theme from `github.com:alshedivat/al-folio` to `github.com:<your-username>/<your-repo-name>` and do the following:
+
+```bash
+git clone git@github.com:<your-username>/<your-repo-name>.git
+cd <your-repo-name>
+bundle install
+bundle exec jekyll serve
 ```
 
 Now, feel free to customize the theme however you like (don't forget to change the name!).
