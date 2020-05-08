@@ -58,7 +58,7 @@ cd <your-repo-name>
 /bin/serve
 ```
 
-When you are at a good stopping place, **commit** your final changes.
+When you are at a good stopping place, **commit** your final changes. YOU MUST COMMIT YOUR CHANGES if you don't, you WILL lose work when you deploy. 
 
 ```bash
 /bin/commit '<informative commit message clearly describing what youve done since your last commit'>
