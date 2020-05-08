@@ -1,4 +1,4 @@
-# A clean theme for social scientists
+# A clean, lightning-fast theme for social scientists
 (Forked from '[al-folio](https://alshedivat.github.io/al-folio/)')
 
 ## Getting started
@@ -8,7 +8,7 @@ Why Jekyll? Read this [blog post](https://karpathy.github.io/2014/07/01/switchin
 
 ### Installation
 
-Assuming you have a Mac, first install [brew](https://brew.sh/). Install [Ruby](https://www.ruby-lang.org/en/downloads/), gcc, and [Bundler](https://bundler.io/) using brew and [rbenv](https://github.com/rbenv/rbenv)*):
+Assuming you have a Mac, first install [brew](https://brew.sh/). Install [Ruby](https://www.ruby-lang.org/en/downloads/), gcc, and [Bundler](https://bundler.io/) using brew and [rbenv](https://github.com/rbenv/rbenv):
 
 ```bash
 brew update
@@ -18,8 +18,8 @@ brew tap homebrew/dupes
 brew install autoconf automake apple-gcc42
 ```
 
-
-first fork the theme from `github.com:alshedivat/al-folio` to `github.com:<your-username>/<your-repo-name>` and do the following:
+first fork the theme from `github.com:SolomonMg/
+SolomonMg.github.io` to `github.com:<your-username>/<your-repo-name>` and do the following:
 
 ```bash
 git clone git@github.com:<your-username>/<your-repo-name>.git
@@ -28,37 +28,57 @@ bundle install
 bundle exec jekyll serve
 ```
 
-Now, feel free to customize the theme however you like (don't forget to change the name!).
-After you are done, **commit** your final changes.
-Now, you can deploy your website to [GitHub Pages](https://pages.github.com/) by running the deploy script:
+## Customizing 
+First open `_config.yml` and customize for you. 
 
-```bash
-$ ./bin/deploy [--user]
-```
-By default, the script uses the `master` branch for the source code and deploys the webpage to `gh-pages`.
-The optional flag `--user` tells it to deploy to `master` and use `source` for the source code instead.
-Using `master` for deployment is a convention for [user and organization pages](https://help.github.com/articles/user-organization-and-project-pages/).
-
-**Note:** when deploying your user or organization page, make sure the `_config.yml` has `url` and `baseurl` fields as follows.
-
-```
-url: # should be empty
-baseurl:  # should be empty
-```
-
-### Usage
+Have a look in the `/_pages/` directory. Here you can edit markdown for the actual pages used--about, projects, publications, etc. 
 
 Note that `_pages/about.md` is built to index.html in the published site. There is therefore no need to have a separate index page for the project. If an index page does exist in the root directory then this will prevent `_pages/about.md` from being added to the built site.
 
+
+Next, open the `_projects/` directory. Name your projects according to the current file naming scheme, and modify as appropriate. 
+
+Now open, `/_posts/` where you can create blogposts. Again, use the current file naming scheme and all will be well.  
+
+Put your pdfs in `/assets/pdf/` and your images in `/assets/img/`. 
+
+If you want to post personal/professional news updates to your website, put them in `/_news/`.  
+
+## Advanced customization
+If you want to customize the html layout for any of these pages, edit it in `/_layouts/`. Various html components can also be edited in `/_includes/`. 
+
+If you want to customize the CSS, edit it in `/_sass/`. 
+
+## Saving and deploying
+
+To preview your website run this from the command line: 
+
+```bash
+cd <your-repo-name>
+/bin/serve
+```
+
+When you are at a good stopping place, **commit** your final changes.
+
+```bash
+/bin/commit '<informative commit message clearly describing what youve done since your last commit'>
+```
+
+This will save (commit) your changes to the `source` branch. You'll deploy to the `master` branch. If you don't understand what that means, don't worry about it too much. You can learn more about branching with git and GitHub using [GitHub's tutorial](https://guides.github.com/activities/hello-world/) or this article from [The New Stack](https://thenewstack.io/dont-mess-with-the-master-working-with-branches-in-git-and-github/). 
+
+I recommend 'pushing' your local changes (commits) to your GitHub repository for tracking purposes: 
+
+```bash
+git push
+```
+
+Now, you can deploy your website to [GitHub Pages](https://pages.github.com/) by running the deploy script:
+
+```bash
+/bin/deploy
+```
+
 ## Features
-
-#### Ergonomic Publications
-
-Your publications page is generated automatically from your BibTex bibliography.
-Simply edit `_bibliography/papers.bib`.
-You can also add new `*.bib` files and customize the look of your publications however you like by editing `_pages/publications.md`.
-
-Keep meta-information about your co-authors in `_data/coauthors.yml` and Jekyll will insert links to their webpages automatically.
 
 #### Collections
 This Jekyll theme implements collections to let you break up your work into categories.
