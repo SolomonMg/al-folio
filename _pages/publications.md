@@ -2,13 +2,18 @@
 layout: page
 permalink: /publications/
 title: publications
-description: <!-- select publications sorted arbitrarily -->
-years: [1956, 1950, 1935, 1905]
+<!-- description: select publications sorted by topic -->
 redirect_from: "/research/"
 
 ---
 
-### Media & Politics
+1. [Media & Politics](#mediapolitics)
+2. [Methods & Data Science](#methodsds)
+3. [Representation & Congressional Communication](#representation)
+4. [Immigration](#immigration)
+5. [Medicine](#medicine)
+
+### Media & Politics <a name="mediapolitics"></a>
 
 [**Projecting Confidence: How the Probabilistic Horse Race Confuses and Demobilizes the Public**](/assets/pdf/aggregator.pdf). **Journal of Politics, 2020**. With Sean Westwood and Yphtach Lelkes.
 - Supplimentary [materials](/assets/pdf/aggregatorSM.pdf)
@@ -56,7 +61,7 @@ Today](https://www.usatoday.com/story/tech/news/2018/04/09/bots-rampant-twitter-
 [FastCompany](https://www.fastcompany.com/40556233/twitter-bots-are-getting-busy-making-sure-your-tweet-goes-viral).
 
 
-### Methods & Data Science
+### Methods & Data Science <a name="methodsds"></a>
 [**Estimating Heterogeneous Treatment Effects and the Effects of
 Heterogeneous Treatments with Ensemble
 Methods**](/assets/pdf/het.pdf)
@@ -82,7 +87,7 @@ Plaut
 - Media: [Washington Post Monkey Cage](https://www.washingtonpost.com/news/monkey-cage/wp/2016/01/11/what-color-is-obama-these-researchers-examined-reactions-when-his-skin-looks-darker/), [Washington Post Wonkblog](https://www.washingtonpost.com/news/wonk/wp/2015/12/29/obamas-skin-looks-a-little-different-in-these-gop-campaign-ads/),
 [CBS News](http://www.cbsnews.com/news/study-2008-mccain-attack-ads-darkened-obama-skin-tone/).
 
-### Representation & Congressional Communication
+### Representation & Congressional Communication <a name="representation"></a>
 [**How Words and Money Cultivate a Personal Vote: The Effect of Legislator Credit Claiming on Constituent Credit Allocation**](/assets/pdf/GrimmerMessingWestwood.pdf)
 **American Political Science Review, 2012**. With Justin Grimmer and Sean Westwood
 - [Supplementary Information](/assets/pdf/ccsup.pdf)
@@ -105,7 +110,7 @@ Post](https://www.washingtonpost.com/news/politics/wp/2017/12/18/how-politicians
 
 [**Very liberal or conservative legislators most likely to share news on Facebook**](https://www.pewresearch.org/fact-tank/2018/01/19/very-liberal-or-conservative-legislators-most-likely-to-share-news-on-facebook//). **Pew Research Center**, 2018.
 
-### Immigration
+### Immigration <a name="immigration"></a>
 [**Do Attitudes About Immigration Predict Willingness to Admit Individual
 Immigrants? A Cross-National Test of the Person-Positivity
 Bias**](https://www.dropbox.com/s/5crzhtifzf969vk/POQCrossNationalImmigration.pdf?raw=true)
@@ -114,7 +119,7 @@ Nicholas Valentino, Toril Aalberg, Raymond Duch, Kyu S. Hahn, Stuart
 Soroka, Allison Harell, & Tetsuro Kobayashi 
 
 
-### Medicine
+### Medicine <a name="medicine"></a>
 [**Differentiation of Normal Thymus from Anterior Mediastinal Lymphoma and Lymphoma Recurrence at Pediatric PET/CT**](http://pubs.rsna.org/doi/full/10.1148/radiol.11110715)
 **Radiology, 2012**. With Rakhee Gawande, Aman Khurana, Dong Zhang,
 Rosalinda Castaneda, Robert Goldsby, Randal Hawkins, & Heike
