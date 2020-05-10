@@ -33,7 +33,7 @@ blog_name: Blog
 blog_description: Thoughts on data visualization, analysis, & scientific research.
 
 # Pagination
-paginate: 10
+paginate: 3
 permalink: /blog/:year/:title/
 paginate_path: /blog/page:num/
 
@@ -90,6 +90,7 @@ plugins:
     - jekyll-twitter-plugin
     - jekyll-redirect-from
 
+paginate: 10
 
 markdown: kramdown
 kramdown:
