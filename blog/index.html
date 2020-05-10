@@ -7,20 +7,25 @@ layout: default
   <h2>{{ site.blog_description }}</h2>
 </div>
 
-
-<ul class="post-list">
+<!-- <ul class="post-list"> -->
+<table cellspacing="0" cellpadding="0" width="1000" border-radius: 0px; padding: 0px; margin: 0px;>
   {% for post in paginator.posts %}
-    <li>
+
+  <tr>
+    <td width="250" style="vertical-align:middle;">
+      {% if post.image %}
+        <img class="two" src="{{ post.image | prepend: '/assets/img/' | prepend: site.baseurl | prepend: site.url }}">
+      {% endif %}
+    </td>  
+    <td>
       <h2><a class="post-title" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
       <p class="post-meta">{{ post.date | date: '%B %-d, %Y — %H:%M' }}</p>
       <p>{{ post.description }}</p>
+    </td>
+  </tr>
 
-	  {% if post.image %}
-        <img class="two" src="{{ post.image | prepend: '/assets/img/' | prepend: site.baseurl | prepend: site.url }}">
-      {% endif %}
-
-    </li>
   {% endfor %}
-</ul>
+<!-- </ul> -->
+</table>
 
 {% include pagination.html %}
