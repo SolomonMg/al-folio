@@ -88,6 +88,11 @@ Plaut
 [CBS News](http://www.cbsnews.com/news/study-2008-mccain-attack-ads-darkened-obama-skin-tone/).
 
 ### Representation & Congressional Communication <a name="representation"></a>
+[**The Impression of Influence: Legislator Communication, Representation, and Democratic Accountability**](/assets/pdf/GrimmerWestwoodMessingBook.pdf)
+**Princeton University Press, 2015**. With Justin Grimmer and Sean
+Westwood 
+- Media: [Mischiefs of Faction](http://www.mischiefsoffaction.com/2015/01/its-frequency-not-size-compromise.html).
+
 [**How Words and Money Cultivate a Personal Vote: The Effect of Legislator Credit Claiming on Constituent Credit Allocation**](/assets/pdf/GrimmerMessingWestwood.pdf)
 **American Political Science Review, 2012**. With Justin Grimmer and Sean Westwood
 - [Supplementary Information](/assets/pdf/ccsup.pdf)
