@@ -471,7 +471,8 @@ g97matched = g97[ match(rnames, row.names(g97)), match(cnames, colnames(g97)) ]
   
 # We need to do the same thing for the diagonal of the matrix g96e, which is
 # our co-membership/affiliation matrix computed above:
-mag96diagmatched = diag( g96e[ match(cnames, colnames(g96e)), match(cnames, colnames(g96e)) ] )
+mag96diagmatched = diag( g96e[ match(cnames, colnames(g96e)), 
+  match(cnames, colnames(g96e)) ] )
   
 # Now let's check to make sure things worked correctly:
 which(row.names(g96matched) != row.names(g97matched))
@@ -503,11 +504,14 @@ mag97_98 = t(g97matched) %*% g98matched
 Now we need to get the group-level membership matrix diagonal, ordered by the current set of columns. 
 
 ```r
-mag96diagmatched = diag( g96e[ match(cnames, colnames(g96e)), match(cnames, colnames(g96e)) ] )
+mag96diagmatched = diag( g96e[ match(cnames, colnames(g96e)), 
+  match(cnames, colnames(g96e)) ] )
 
-mag97diagmatched = diag( g97e[ match(cnames, colnames(g97e)), match(cnames, colnames(g97e)) ] )
+mag97diagmatched = diag( g97e[ match(cnames, colnames(g97e)), 
+  match(cnames, colnames(g97e)) ] )
   
-mag98diagmatched = diag( g98e[ match(cnames, colnames(g98e)), match(cnames, colnames(g98e)) ] )
+mag98diagmatched = diag( g98e[ match(cnames, colnames(g98e)), 
+  match(cnames, colnames(g98e)) ] )
 ```
 
 And finally we can create the transition probability matrix! Divide magmob96_97 by mag96diagmatched in to get the transition probability matrix (Markov chain):
