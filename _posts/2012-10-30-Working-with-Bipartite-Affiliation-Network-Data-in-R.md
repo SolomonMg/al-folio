@@ -438,3 +438,94 @@ Here's the [pdf output](/assets/img/magallggt1custom.pdf), and here's what it l
 ![](/assets/img/magallggt1custom.png)
 
 This visualization reveals much more information about our network than our cresent-star visualization.
+
+
+###  Mobility, Markov, and Transition Probabilities
+In order to shed light on how people flow through these groups, we'll compute transition probabilities. These transition probabilities are more generally referred to as Markov chains. 
+
+First we'll create a new matrix that multiplies 1996 magnet with 1997 magnet so you see the number of students moving from 1996 membership to 1997 memberships.
+
+Before we actually do this, we need to do some data munging to make sure that the rows and columns for g96 and g97 are the same. We'll use the match() function for this.
+
+
+```r
+    
+# First, let's get an idea of how many column-names (activities) and row
+# names (student ids) are in common between the two years:
+  
+(cnames = intersect( colnames(g96), colnames(g97) ) )
+(rnames = intersect( row.names(g96), row.names(g97) ) )
+  
+# Great, there are a lot of names in common. Now we
+# need to make sure we are only using the rows
+# and columns of each matrix that contain entries used in
+# both years. We also need to make sure that the columns and
+# rows are in the same order.
+  
+# In order to accomplish this we are going to exploit R's
+# indexing capabilities. We are going to have R "rebuild"
+# each matrix according to the order of rnames and cnames.
+# We'll use the match() function to accomplish this.
+g96matched = g96[ match(rnames, row.names(g96)), match(cnames, colnames(g96)) ]
+g97matched = g97[ match(rnames, row.names(g97)), match(cnames, colnames(g97)) ]
+  
+# We need to do the same thing for the diagonal of the matrix g96e, which is
+# our co-membership/affiliation matrix computed above:
+mag96diagmatched = diag( g96e[ match(cnames, colnames(g96e)), match(cnames, colnames(g96e)) ] )
+  
+# Now let's check to make sure things worked correctly:
+which(row.names(g96matched) != row.names(g97matched))
+which(colnames(g96matched) != colnames(g97matched))
+```
+
+Now that these are effectively matricies, we can multiply to get the transition probability matrix:
+
+```r  
+mag96_97 = t(g96matched) %*% g97matched
+```
+
+Let's munge the 97 and 98 data and repeat:
+
+```r    
+
+cnames = intersect( colnames(g97), colnames(g98) ) 
+rnames = intersect( row.names(g97), row.names(g98) )
+g97matched = g97[ match(rnames, row.names(g97)), match(cnames, colnames(g97)) ]
+g98matched = g98[ match(rnames, row.names(g98)), match(cnames, colnames(g98)) ]
+```
+
+And again for the 97-98 transition:
+
+```r      
+mag97_98 = t(g97matched) %*% g98matched
+```
+
+Now we need to get the group-level membership matrix diagonal, ordered by the current set of columns. 
+
+```r
+mag96diagmatched = diag( g96e[ match(cnames, colnames(g96e)), match(cnames, colnames(g96e)) ] )
+
+mag97diagmatched = diag( g97e[ match(cnames, colnames(g97e)), match(cnames, colnames(g97e)) ] )
+  
+mag98diagmatched = diag( g98e[ match(cnames, colnames(g98e)), match(cnames, colnames(g98e)) ] )
+```
+
+And finally we can create the transition probability matrix! Divide magmob96_97 by mag96diagmatched in to get the transition probability matrix (Markov chain):
+
+```r
+magmob96_97 = mag96_97/mag96diagmatched 
+magmob97_98 = mag97_98/mag97diagmatched
+```  
+  
+Now add the matrices and divide by 2:
+  
+```r
+mobility_all <- (magmob96_97 + magmob97_98)/2
+
+```
+
+Now plot as with the event-overlap graphs!
+
+
+
+
