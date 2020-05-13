@@ -377,7 +377,7 @@ Nearly all of the edge weights are below 1--or in other words, the percent overl
 
 ```r
 magallgt1 <- magall
-magallgt1[magallgt1&lt;1] <- 0
+magallgt1[magallgt1<1] <- 0
 magallggt1 <- graph.adjacency(magallgt1, weighted=T)
 # Removes loops:
 magallggt1 <- simplify(magallggt1, remove.multiple=FALSE, remove.loops=TRUE)
