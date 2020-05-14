@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+
+  <!-- Mathjax Support -->
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Solomon Messing | Projecting Confidence</title>
+  <meta name="description" content="Research Scientist. Manager of data science for Social Science One at  Facebook, former (founding) Director at Pew Research Center’s Data Labs.
+">
+
+  <link rel="shortcut icon" href="/assets/img/favicon.ico">
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="canonical" href="/projects/2_project/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <span class="site-title">
+        
+        <strong>Solomon Messing</strong>
+    </span>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+      <div class="trigger">
+        
+        <!-- CV -->
+        <a class="page-link" href="/assets/pdf/CV.pdf">CV</a>
+
+        <!-- About -->
+        
+          <a class="page-link" href="/">about</a>
+        
+
+        <!-- Blog -->
+        
+          <a class="page-link" href="/blog/">blog</a>
+        
+
+
+        <!-- Pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            
+              <a class="page-link" href="/projects/">projects</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/publications/">publications</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/teaching/">teaching</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/techsetup/">tech stack</a>
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+    <!--     
+          
+            <li><a href="/cv"></a></li>
+          
+        
+          
+            <li><a href="/"></a></li>
+          
+        
+          
+            <li><a href="/blog/"></a></li>
+          
+        
+          
+            <li><a href="/assets/css/main.css"></a></li>
+          
+        
+          
+            <li><a href="/projects/">projects</a></li>
+          
+        
+          
+            <li><a href="/publications/">publications</a></li>
+          
+        
+          
+            <li><a href="/teaching/">teaching</a></li>
+          
+        
+          
+            <li><a href="/techsetup/">tech stack</a></li>
+          
+        
+          
+            <li><a href="/assets/css/style.css"></a></li>
+          
+        
+          
+            <li><a href="/assets/pdf/cv/"></a></li>
+          
+        
+          
+            <li><a href="/2012/03/04/visualization-series-insight-from-cleveland-and-tufte-on-plotting-numeric-data-by-groups/"></a></li>
+          
+        
+          
+            <li><a href="/2012/09/30/working-with-bipartiteaffiliation-network-data-in-r/"></a></li>
+          
+        
+          
+            <li><a href="/2014/10/11/when-to-use-stacked-barcharts/"></a></li>
+          
+        
+          
+            <li><a href="/2015/05/24/exposure-to-ideologically-diverse-news-and-opinion-future-research/"></a></li>
+          
+        
+          
+            <li><a href="/2017/10/16/replication-of-study-2-in-bias-in-the-flesh-skin-complexion-and-stereotype-consistency-in-political-campaigns/"></a></li>
+          
+        
+          
+            <li><a href="/blog/2014/visualization-series-the-scatterplot-and-understanding-the-diamond-market/"></a></li>
+          
+        
+          
+            <li><a href="/2018/02/16/response-to-fivethirtyeights-podcast-about-our-paper-projecting-confidence/"></a></li>
+          
+        
+          
+            <li><a href="/research/"></a></li>
+          
+        
+          
+            <li><a href="/redirects.json"></a></li>
+          
+         -->
+
+
+        <!-- CV link -->
+        <!-- <a class="page-link" href="/assets/pdf/CV.pdf">vitae</a> -->
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h5 class="post-description">How the Probabilistic Horse Race Demobilizes the Public</h5>
+  </header>
+
+  <article class="post-content Projecting Confidence clearfix">
+    <p>Inspired by Donald Trump’s surprise victory over Hillary Clinton in the 2016 general election, <a href="https://www.dartmouth.edu/~seanjwestwood/">Sean Westwood</a>, <a href="http://ylelkes.com/">Yphtach Lelkes</a> and I set out to interrogate the question of whether elecion forecasts—particularly probablistic forecasts—might create a sense of inevitability, and ultimately lead people to stay home on election day.</p>
+
+<p>Clinton herself was quoted in <a href="http://nymag.com/daily/intelligencer/2017/05/hillary-clinton-life-after-election.html?mid=nymag_press">New York Magazine</a> after the election:</p>
+
+<blockquote>
+  <p>I had people literally seeking absolution… ‘<em>I’m so sorry I didn’t vote. I didn’t think you needed me.</em>’ I don’t know how we’ll ever calculate how many people thought it was in the bag, because the percentages kept being thrown at people — ‘<em>Oh, she has an 88 percent chance to win!</em>’</p>
+</blockquote>
+
+<p><strong>Is it plausible that forecasting could have affected the election?</strong></p>
+
+<p>For this phenomena to affect an election, it must:</p>
+<ol>
+  <li>be visible in the media so it reaches potential voters,</li>
+  <li>depress turnout, and</li>
+  <li>affect one side more than the other. In the case of 2016, that means affecting Clinton’s supporters (and/or Clinton campaigners) more than Trump’s.</li>
+</ol>
+
+<p>We found evidence for all of the above. First, witness the rise of forecasts since 2008, when FiveThirtyEight first came on the scene:</p>
+
+<p><img src="/assets/img/forecast_google_news.png" alt="" /></p>
+
+<p>What’s more, there is good evidence that one side will be more affected. Our research (see results below) suggests that <em>candidate who is ahead in the polls is more affected</em> by probablistic forecasts. In 2016, that was Hillary.</p>
+
+<p>And irrespective of 2016, it’s outlets with a <em>left-leaning audience</em> that publish and cover election forecasts. The websites that present their poll aggregation results in terms of probabilities have left-leaning (negative) social media audiences—only realclearpolitics.com, which doesn’t emphasize win-probabilities, has a conservative audience:</p>
+
+<p><img src="/assets/img/bma_science_alignment.png" alt="half" /></p>
+
+<p>These data come from the average self-reported ideology of people who share links to various sites hosting poll-aggregators on Facebook, data that come from <a href="http://science.sciencemag.org/content/early/2015/05/06/science.aaa1160.full">this paper</a>’s <a href="http://dx.doi.org/10.7910/DVN/LDJ7MS">replication materials</a>.</p>
+
+<p>When you look at the balance of coverage of probabilistic forecasts on major television broadcasts, there is more coverage on MSNBC, which has a more liberal audience.</p>
+
+<p><img src="/assets/img/msnbc_mentions.png" alt="half" /></p>
+
+<p><strong>How much influence do forecasters really have?</strong></p>
+
+<p>It’s increadibly difficult to tease out when one media outlet is influencing another. However, a freak event in 2018 allows us to get some traction on this question, and suggests that FiveThirtyEight’s 2018 coverage was highly influential.</p>
+
+<p>After FiveThirtyEight’s real-time forecast suddenely moved the the GOP’s odds of taking the House from single digits to about 60% at around 8:15PM, PredictIt’s odds on the GOP rose above 50-50, &amp; <em>U.S. government bond yields rose 2-4 basis points.</em>  FiveThirtyEight then altered it’s prediction system and the markets calmed down.</p>
+
+<p><img src="/assets/img/538-markets.jpg" alt="" /></p>
+
+<p>This spike seems to have occurred because a number of big, <a href="https://fivethirtyeight.com/live-blog/2018-election-results-coverage/#3495">Republican-dominated districts started reporting returns before those that went toward Democrats</a> and because it was making inferences from partial vote counts:</p>
+
+<p><img src="/assets/img/538realtimepolling.jpg" alt="half" /></p>
+
+<p>This was <a href="https://ftalphaville.ft.com/2018/11/07/1541617447000/Debt-markets-let-us-know-what-they-think-about-Republicans-last-night/">first reported by Colby Smith &amp; Brian Greeley of FT.com</a>. They report that because markets expected to see more inflation under a Republican House (high spending, low taxes) the U.S. Bond yield rose.</p>
+
+<p>Was this just a correlation? Possibly, but there was pretty much nothing else happening in the U.S., and it was like 1 am in Europe, as pointed out in the FT.com piece above.</p>
+
+<p>Josh Tucker suggested that <a href="http://themonkeycage.org/2012/10/convergence-between-polls-and-prediction-markets-in-us-presidential-election/">538 might be driving prediction markets</a> back in 2012 in a Monkey Cage blogpost.</p>
+
+<p><strong>Our research on forecasting and perception</strong></p>
+
+<p><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3117054">Our research</a> shows that probablistic election forecasts make a race look less competitive. Participants in a national probability survey-experiment were substantially more certain that one candidate would win a hypothetical race after seeing a probablistic forecast than after seeing the equivalent vote share estimate and margin of error. This is a big effect—those are confidence intervals not standard errors, with p-values below <script type="math/tex">10^{-11}</script>.</p>
+
+<p><img src="/assets/img/certaintyc.png" alt="normal" /></p>
+
+<p><strong>Why do people do this?</strong></p>
+
+<p>More research is needed here but we do have some leads. First, small differences in the election metric most familiar to the public—vote share estimates—generally correspond to very large differences in the probability of a candidate’s chance of victory.</p>
+
+<p>Andy Gelman referenced this in passing in a <a href="https://andrewgelman.com/2012/10/22/is-it-meaningful-to-talk-about-a-probability-of-65-7-that-obama-will-win-the-election/">2012 blogpost</a> questioning the decimal precision (0.1 percent) that 538 used to communicate its forecast on its website:</p>
+
+<blockquote>
+  <p>That’s right: a change in 0.1 of win probability corresponds to a 0.004 percentage point share of the two-party vote. I can’t see that it can possibly make sense to imagine an election forecast with that level of precision…</p>
+</blockquote>
+
+<p>Second, people sometimes confuse probabilistic forecasts with vote share projections, and incorrectly conclude that a candidate is projected to say win 85% percent of the vote, rather than to having an 85% chance of winning the election. About 1 in 10 peope did this in our experiment.</p>
+
+<p>As <a href="https://twitter.com/jbenton/status/1059898288139354112">Joshua Benton pointed out in a tweet</a>, TalkingPointsMemo.com <a href="https://talkingpointsmemo.com/news/issa-calls-race-early">made this very mistake</a>:</p>
+
+<p><img src="/assets/img/TPMCorrection.jpg" alt="" /></p>
+
+<p>Finally, people tend to think in qualitative terms about the probability of events <a class="citation" href="#sunstein2002probability">(Sunstein, 2002)</a>, <a class="citation" href="#keren1991calibration">(Keren, 1991)</a>. An 85% likelihood that something will happen means it’s going to happen. These studies may help explain why after the 2016 election, so many criticized forecasters for “getting it wrong” (see <a href="https://www.nytimes.com/2016/11/10/technology/the-data-said-clinton-would-win-why-you-shouldnt-have-believed-it.html">this</a> and <a href="http://www.slate.com/articles/news_and_politics/politics/2016/01/nate_silver_said_donald_trump_had_no_shot_where_did_he_go_wrong.html">this</a>).</p>
+
+<p><strong>What about voting?</strong></p>
+
+<p>Perhaps most critically, we show that probabilistic forecasts showing more of a blowout can lower voting. In Study 1, we find limited evidence of this based on self reports. In Study 2, we show that when participants are faced with incentives designed to simulate real world voting, they are less likely to vote when probabilistic forecasts show higher odds of one candidate winning. Yet they are not responsive to changes in vote share.</p>
+
+<p><img src="/assets/img/FT_18.01.03_prob_vote.png" alt="normal" /></p>
+
+<p><strong>Could this actually affect real world voting?</strong></p>
+
+<p>Consider 2016—an unusually high number of Democrats thought the leading candidate would <em>win by quite a bit</em>:</p>
+
+<p><img src="/assets/img/anes_turnout_closerace_mc_tall.png" alt="normal" /></p>
+
+<p>And people who say the leading candidate will <em>win by quite a bit</em> in pre-election polling are about three percentage points less likely to say they voted after the election than people who say it’s a close race. That’s after controlling for election year, prior turnout, and party identification.</p>
+
+<p><img src="/assets/img/closerace_vote_anes.png" alt="normal" /></p>
+
+<p>The data here are from the <a href="https://electionstudies.org">American National Election Study (ANES)</a> and go back to 1952.</p>
+
+<p>Past social science research also provides evidence that the perception of a close race boosts turnout. Some of the best evidence comes from work that analyzes the effects of releasing exit polling results before voting ends, which clearly removes uncertainty. Work examining the effects of East Coast television networks’ “early calls” for one candidate or another on West Coast turnout generally find small but substantively meaningful effects, despite the fact that these calls occur late on election day <a class="citation" href="#carpini1984scooping">(Delli Carpini, 1984)</a>, <a class="citation" href="#Sudman:1986wu">(Sudman, 1986)</a>. Similar work exploiting voting reform as a natural experiment shows a full 12 percentage point decrease in turnout in the French overseas territories that voted after exit polls were released <a class="citation" href="#Morton201565">(Morton et al., 2015)</a>. These designs are not confounded with the tendency for campaigns to invest more in campaigns in competitive races.</p>
+
+<p>Researchers consistently find robust correlations between tighter elections and higher turnout [see <a class="citation" href="#geys2006explaining">(Geys, 2006)</a>; <a class="citation" href="#cancela2016explaining">(Cancela &amp; Geys, 2016)</a> for reviews]. Furthermore, <a class="citation" href="#nicholson1997prior">(Nicholson &amp; Miller, 1997)</a> provide evidence from statistical models that prior election returns also explain turnout above and beyond campaign spending, particularly when good polling data is unavailable.</p>
+
+<p>Field experiments provide additional evidence that perceptions of higher electoral competition increases turnout. This work finds substantive effects on turnout when polling results showing a closer race are delivered via telephone [among those who were reached, <a class="citation" href="#biggers2017experimental">(Biggers et al., 2017)</a>] but null results when relying on postcards to deliver closeness messages [for which it’s not possible to verify the treatment was actually read, (missing reference); <a class="citation" href="#biggers2017experimental">(Biggers et al., 2017)</a>. Finally, one study conducted in the weeks leading up to the 2012 presidential election found higher rates of self-reported, post-election turnout when delivering ostensible polling results showing Obama neck-and-neck with Romney [which was not consistent with the extant polling data showing a comfortable Obama lead, <a class="citation" href="#Vannette:2014vk">(Vannette &amp; Westwood, n.d.)</a>].</p>
+
+<p><strong>Could this affect politicians as well?</strong></p>
+
+<p>Candidates’ perceptions of the closeness of an election can affect campaigning and representation <a class="citation" href="#enos2015campaign">(Enos &amp; Hersh, 2015)</a>, <a class="citation" href="#Mutz:1997wy">(Mutz, 1997)</a>.</p>
+
+<p>These perceptions can also shape policy decisions—-for example, prior to the 2016 election, the Obama administration’s confidence in a Clinton victory was reportedly a factor in the muted response to <a href="https://www.washingtonpost.com/graphics/2017/world/national-security/obama-putin-election-hacking/">Russian intervention in the election</a>.</p>
+
+<p>And former FBI Director James Comey, because of his confidence in a Clinton victory, said he felt that it was his duty to write a letter to Congress on October 28 saying he was reopening the investigation into her emails. Comey explained his actions based on his certain belief in a Clinton win: ‘‘[S]he’s gonna be elected president, and if I hide this from the American people, she’ll be illegitimate the moment she’s elected, the moment this comes out’’ <a class="citation" href="#keneally_2018">(Keneally, 2018)</a>. Nate Silver at one point said ‘‘<a href="https://fivethirtyeight.com/features/the-comey-letter-probably-cost-clinton-the-election/">the Comey letter probably cost Clinton the Election</a>.’’</p>
+
+<p><img src="/assets/img/ComeyABCCNNresize.jpg" alt="" /></p>
+
+<p><strong>Media coverage</strong>
+<a href="https://www.washingtonpost.com/news/politics/wp/2018/02/06/clintons-achilles-heel-in-2016-may-have-been-overconfidence/?utm_term=.619133ce9312">Washington Post</a>, <a href="https://fivethirtyeight.com/features/politics-podcast-whats-so-wrong-with-nancy-pelosi/">FiveThirthyEight’s Politics Podcast</a>, <a href="http://nymag.com/intelligencer/2018/02/americans-dont-understand-election-probabilities.html?gtm=bottom&amp;gtm=bottom">New York Magazine</a>, <a href="https://politicalwire.com/2018/02/06/election-forecasts-lower-voter-turnout/">Political Wire</a>.</p>
+
+<p><strong>References</strong></p>
+<ol class="bibliography"><li><span id="keneally_2018">Keneally, M. (2018). Comey says everyone – himself included – thought Clinton would win 2016 election. In <i>ABC News</i>. ABC News Network. https://abcnews.go.com/Politics/comey-included-thought-clinton-win-2016-election/story?id=54486869</span></li>
+<li><span id="biggers2017experimental">Biggers, D. R., Hendry, D. J., Gerber, A. S., &amp; Huber, G. A. (2017). <i>Experimental Evidence about Whether (and Why) Electoral Closeness Affects Turnout</i>. https://huber.research.yale.edu/materials/67_paper.pdf</span></li>
+<li><span id="cancela2016explaining">Cancela, J., &amp; Geys, B. (2016). Explaining voter turnout: A meta-analysis of national and subnational elections. <i>Electoral Studies</i>, <i>42</i>, 264–275.</span></li>
+<li><span id="enos2015campaign">Enos, R. D., &amp; Hersh, E. D. (2015). Campaign Perceptions of Electoral Closeness: Uncertainty, Fear and Over-Confidence. <i>British Journal of Political Science</i>, 1–19.</span></li>
+<li><span id="Morton201565">Morton, R. B., Muller, D., Page, L., &amp; Torgler, B. (2015). Exit polls, turnout, and bandwagon voting: Evidence from a natural experiment . <i>European Economic Review </i>, <i>77</i>, 65–81. https://doi.org/http://dx.doi.org/10.1016/j.euroecorev.2015.03.012</span></li>
+<li><span id="geys2006explaining">Geys, B. (2006). Explaining voter turnout: A review of aggregate-level research. <i>Electoral Studies</i>, <i>25</i>(4), 637–663.</span></li>
+<li><span id="sunstein2002probability">Sunstein, C. R. (2002). Probability neglect: Emotions, worst cases, and law. <i>The Yale Law Journal</i>, <i>112</i>(1), 61–107.</span></li>
+<li><span id="nicholson1997prior">Nicholson, S. P., &amp; Miller, R. A. (1997). Prior beliefs and voter turnout in the 1986 and 1988 congressional elections. <i>Political Research Quarterly</i>, <i>50</i>(1), 199–213.</span></li>
+<li><span id="Mutz:1997wy">Mutz, D. C. (1997). Mechanisms of Momentum: Does Thinking Make It So? <i>The Journal of Politics</i>, <i>59</i>(1), 104–125.</span></li>
+<li><span id="keren1991calibration">Keren, G. (1991). Calibration and probability judgments: Conceptual and methodological issues. <i>Acta Psychologica</i>, <i>77</i>(3), 217–273.</span></li>
+<li><span id="Sudman:1986wu">Sudman, S. (1986). Do Exit Polls Influence Voting Behavior? <i>Public Opinion Quarterly</i>, <i>50</i>(3), 331–339.</span></li>
+<li><span id="carpini1984scooping">Delli Carpini, M. X. (1984). Scooping the voters? The consequences of the networks’ early call of the 1980 presidential race. <i>The Journal of Politics</i>, <i>46</i>(3), 866–885.</span></li>
+<li><span id="Vannette:2014vk">Vannette, D. L., &amp; Westwood, S. J. <i>Can Pre-election Polls Influence Turnout? Evidence from a Randomized Experiment</i>. https://www.dartmouth.edu/ seanjwestwood/papers/polling.pdf</span></li></ol>
+
+
+  </article>
+
+  
+
+  
+
+</div>
+
+      </div>
+    </div>
+
+    <footer>
+
+  <div class="wrapper">
+    &copy; Copyright 2020 Solomon Messing.
+    
+    
+  </div>
+
+</footer>
+
+
+    <!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"></script>
+<script src="/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css">
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-27273977-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+
+  <!-- Mathjax Support -->
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Solomon Messing | Why Election Forecasting Matters - A Response to FiveThirtyEight</title>
+  <meta name="description" content="Research Scientist. Manager of data science for Social Science One at  Facebook, former (founding) Director at Pew Research Center’s Data Labs.
+">
+
+  <link rel="shortcut icon" href="/assets/img/favicon.ico">
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="canonical" href="/blog/2018/response-to-fivethirtyeights-podcast-about-our-paper-projecting-confidence/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <span class="site-title">
+        
+        <strong>Solomon Messing</strong>
+    </span>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+      <div class="trigger">
+        
+        <!-- CV -->
+        <a class="page-link" href="/assets/pdf/CV.pdf">CV</a>
+
+        <!-- About -->
+        
+          <a class="page-link" href="/">about</a>
+        
+
+        <!-- Blog -->
+        
+          <a class="page-link" href="/blog/">blog</a>
+        
+
+
+        <!-- Pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            
+              <a class="page-link" href="/projects/">projects</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/publications/">publications</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/teaching/">teaching</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/techsetup/">tech stack</a>
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+    <!--     
+          
+            <li><a href="/cv"></a></li>
+          
+        
+          
+            <li><a href="/"></a></li>
+          
+        
+          
+            <li><a href="/blog/"></a></li>
+          
+        
+          
+            <li><a href="/assets/css/main.css"></a></li>
+          
+        
+          
+            <li><a href="/projects/">projects</a></li>
+          
+        
+          
+            <li><a href="/publications/">publications</a></li>
+          
+        
+          
+            <li><a href="/teaching/">teaching</a></li>
+          
+        
+          
+            <li><a href="/techsetup/">tech stack</a></li>
+          
+        
+          
+            <li><a href="/assets/css/style.css"></a></li>
+          
+        
+          
+            <li><a href="/assets/pdf/cv/"></a></li>
+          
+        
+          
+            <li><a href="/2012/03/04/visualization-series-insight-from-cleveland-and-tufte-on-plotting-numeric-data-by-groups/"></a></li>
+          
+        
+          
+            <li><a href="/2012/09/30/working-with-bipartiteaffiliation-network-data-in-r/"></a></li>
+          
+        
+          
+            <li><a href="/2014/10/11/when-to-use-stacked-barcharts/"></a></li>
+          
+        
+          
+            <li><a href="/2015/05/24/exposure-to-ideologically-diverse-news-and-opinion-future-research/"></a></li>
+          
+        
+          
+            <li><a href="/2017/10/16/replication-of-study-2-in-bias-in-the-flesh-skin-complexion-and-stereotype-consistency-in-political-campaigns/"></a></li>
+          
+        
+          
+            <li><a href="/blog/2014/visualization-series-the-scatterplot-and-understanding-the-diamond-market/"></a></li>
+          
+        
+          
+            <li><a href="/2018/02/16/response-to-fivethirtyeights-podcast-about-our-paper-projecting-confidence/"></a></li>
+          
+        
+          
+            <li><a href="/research/"></a></li>
+          
+        
+          
+            <li><a href="/redirects.json"></a></li>
+          
+         -->
+
+
+        <!-- CV link -->
+        <!-- <a class="page-link" href="/assets/pdf/CV.pdf">vitae</a> -->
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Why Election Forecasting Matters - A Response to FiveThirtyEight</h1>
+    <p class="post-meta">February 16, 2018</p>
+  </header>
+
+  <article class="post-content">
+    <p>Do you remember the night of Nov 8, 2016? I was glued to election coverage and obsessively checking probabilistic forecasts, wondering whether Clinton might do <em>so well</em> that she’d win in places like my home state of Arizona. Although FiveThirtyEight had Clinton’s chances at beating Trump at around 70%, most other forecasters had her at around 90%.</p>
+
+<p>When she lost, <a href="https://www.nytimes.com/2016/11/10/us/politics/donald-trump-election-reaction.html">many on both sides of the aisle</a> were shocked. My co-authors and I wondered if America’s seeming confidence in a Clinton victory wasn’t driven in part by increasing coverage of probabilistic forecasts. And, if a Clinton victory looked inevitable, what did that do to turnout?</p>
+
+<p><img src="/assets/img/forecast_google_news.png" alt="" /></p>
+
+<p>We weren’t alone. Clinton herself was quoted in <a href="http://nymag.com/daily/intelligencer/2017/05/hillary-clinton-life-after-election.html?mid=nymag_press">New York Magazine</a> after the election:</p>
+
+<blockquote>
+  <p>I had people literally seeking absolution… ‘<em>I’m so sorry I didn’t vote. I didn’t think you needed me.</em>’ I don’t know how we’ll ever calculate how many people thought it was in the bag, because the percentages kept being thrown at people — ‘<em>Oh, she has an 88 percent chance to win!</em>’</p>
+</blockquote>
+
+<p>Enter our recent <a href="http://www.pewresearch.org/fact-tank/2018/02/06/use-of-election-forecasts-in-campaign-coverage-can-confuse-voters-and-may-lower-turnout/">blog post</a> and <a href="https://papers.ssrn.com/abstract=3117054">paper released on SSRN</a>, “Projecting confidence: How the probabilistic horse race confuses and de-mobilizes the public,” by Sean Westwood, Solomon Messing, and Yphtach Lelkes. While our work cannot definitively say whether probabilistic forecasts played a decisive role in the 2016 election, it does indeed show that compared to more conventional vote share projections, probabilistic forecasts can confuse people, can give people more confidence that the candidate depicted as being ahead will win, may decrease turnout, and that liberals in the U.S. are more likely to encounter them. We appreciate the media attention to this work, including coverage by the <a href="https://www.washingtonpost.com/news/politics/wp/2018/02/06/clintons-achilles-heel-in-2016-may-have-been-overconfidence/">Washington Post</a>, <a href="http://nymag.com/daily/intelligencer/2018/02/americans-dont-understand-election-probabilities.html">New York Magazine</a>, and the <a href="https://politicalwire.com/2018/02/06/election-forecasts-lower-voter-turnout/">Political Wire</a>. What’s more, FiveThirtyEight devoted much of their Feb. 12 <a href="https://fivethirtyeight.com/features/politics-podcast-whats-so-wrong-with-nancy-pelosi/">Politics Podcast</a> to a spirited, and at points critical discussion of our work. We are open to criticism and will respond to some of the questions raised in this post. Below, we’ll show that the evidence in our study and in other research is <em>not</em> inconsistent with our headline, as the hosts suggest—we’ll detail the evidence that probabilistic forecasts <em>confuse</em> people, irrespective of their technical accuracy. We’ll also discuss where we agree with the podcast hosts. Furthermore, we’ll discuss a few topics which, judging from the hosts discussion, may not have come through clearly enough in our paper. We’ll reiterate what this work contributes to social science—how the paper adds to our understanding of how people think about probabilistic forecasts and how they may decrease voting, particularly for the leading candidate’s supporters and among liberals in the U.S. We’ll then walk readers through the way we mapped vote share projections to probabilities in the study. Finally we’ll discuss why this work matters, and conclude by pointing out future research we’d like to see in this area.</p>
+
+<p><strong>What’s new here?</strong></p>
+
+<p>The research contains a number findings that are new to social science:</p>
+
+<ul>
+  <li>Presenting forecasted win-probabilities gives potential voters the impression that one candidate will win more decisively, compared with vote share projections (Study 1).</li>
+  <li>Higher win probabilities, but <em>not</em> vote share estimates, <em>decrease voting</em> in the face of the trade-offs embedded in our election simulation (Study 2). This helps confirm the findings in Study 1 and adds to the evidence from past research that people vote at lower rates when they perceive an election to be uncompetitive.</li>
+  <li>In 2016, probabilistic forecasts were covered more extensively than in the past and tended to be covered by outlets with more liberal audiences.</li>
+</ul>
+
+<p><strong>Where we agree</strong></p>
+
+<p>If what you care about is conveying an accurate sense of whether one candidate will win, probabilistic forecasts do this slightly better than vote share. And, they seem to give people an edge on accuracy when interpreting the vote share if your candidate is behind. Of course, people can be confused and still end up being accurate, as we’ll discuss below.</p>
+
+<p>We also agree that people often do not accurately judge the likelihood of victory after seeing a vote share projection. That makes sense because, as the study shows, people appear to largely ignore the margin of error, which they’d need to map between vote share estimates and win probabilities.</p>
+
+<p>We also agree that a lot of past work shows that people stay home when they think an election isn’t close. What we’re adding to that body of work is evidence that compared with vote share projections, probabilistic forecasts give people the impression that one candidate will win more decisively, and may thus <em>more powerfully</em> affect turnout.</p>
+
+<p><strong>Does the evidence in our study contradict our headline?</strong></p>
+
+<p>Our headline isn’t about accuracy, it’s about <em>confusion</em>. And the evidence from this research and past work taken as a whole suggests that probabilistic forecasts confuse people — something that came up at the end of segment — even if the result sometimes is technically higher accuracy.</p>
+
+<p>1. People in the study who saw only probabilistic forecasts were more likely to confuse probability and vote share. After seeing probabilistic forecasts, 8.6% of respondents mixed up vote share and probability, while only 0.6% of respondents did so after seeing vote share projections. We’re defining “mixed-up” as reporting the win-probability we provided as the vote share and vice-versa.</p>
+
+<p>2. Figure 2B (Study 1) shows that people get their candidate’s likelihood of winning very wrong, even when we explicitly told them the probability a candidate will win. It’s true that they got slightly closer with a probability forecast, but they are still far off.</p>
+
+<p><img src="/assets/img/likelihood_loess.png" alt="normal" /></p>
+
+<p>Why might this be? A lot of past research and evidence suggests that people have trouble understanding probabilities, as noted at the end of the podcast. People have a tendency to think about <a href="https://chicagounbound.uchicago.edu/cgi/viewcontent.cgi?article=1384&amp;context=law_and_economics">probabilities in subjective terms</a>, so they have trouble understanding <a href="https://www.ncbi.nlm.nih.gov/pubmed/26161749">medical risks</a> and even <a href="http://pubman.mpdl.mpg.de/pubman/item/escidoc:2101059/component/escidoc:2101058/GG_30_Chance_2005.pdf">weather forecasts</a>.</p>
+
+<p>Nate Silver has himself <a href="https://fivethirtyeight.com/features/the-media-has-a-probability-problem/">made the argument</a> that <a href="https://www.nytimes.com/2016/11/10/technology/the-data-said-clinton-would-win-why-you-shouldnt-have-believed-it.html">the backlash</a> we saw to data and analytics in the wake of the 2016 election is due in part to the media misunderstanding probabilistic forecasts.</p>
+
+<p>As the podcast hosts pointed out, people <em>underestimated</em> the true likelihood of winning after seeing both probabilistic forecasts and vote share projections. It’s possible that people are skeptical of any probabilistic forecast in light of the 2016 election. It’s possible they interpreted the likelihood not as hard-nosed odds, but in rather subjective terms — <em>what might happen</em>, <a href="https://chicagounbound.uchicago.edu/cgi/viewcontent.cgi?article=1384&amp;context=law_and_economics">consistent with past research</a>. Regardless, they do not appear to reason about probability in a way that is consistent with how election forecasters define the probability of winning.</p>
+
+<p>3. Looking at how people reason about vote share — the way people have traditionally encountered polling data — it’s clear from our results that when a person’s candidate is ahead and they see a probabilistic forecast, they rather dramatically overestimate the vote share. On the other hand, when they are behind, they get closer to the right answer.</p>
+
+<p>But we know from past research that people have a “<a href="http://journals.sagepub.com/doi/abs/10.1177/0956797609356421">wishful</a> <a href="http://www.tandfonline.com/doi/abs/10.1207/s15324834basp1304_6">thinking</a>” <a href="https://academic.oup.com/ijpor/article-abstract/9/2/105/713900">bias</a>, meaning they say their candidate is doing better than polling data suggests. That’s why there’s a positive bias when people are evaluating how their candidate will do, according to Figure 2A (Study 1).</p>
+
+<p><img src="/assets/img/votea.png" alt="normal" /></p>
+
+<p>The pattern in the data suggest that people are more accurate after seeing a probabilistic forecast for a losing candidate because of this effect, and <em>not</em> necessarily because they better understand that candidate’s actual chances of victory.</p>
+
+<p>4. Perhaps even more importantly, <em>none</em> of the results here changed when we excluded the margin of error from the projections we presented to people. That suggests that the public may not understand error in the same way that statisticians do, and therefore may not be well-equipped to understand what goes into changes in probabilistic forecast numbers. And of course, very small changes in vote share projection numbers and estimates of error correspond to much larger swings in probabilistic forecasts.</p>
+
+<p>5. Finally, as we point out in the paper, if probabilistic forecasters do not account for total error, they can really overestimate a candidate’s probability of winning. Of course, that’s because an estimate of the probability of victory bakes in estimates of error, which recent work has found is <a href="http://www.stat.columbia.edu/~gelman/research/unpublished/polling-errors.pdf">often about twice as large as the estimates of sampling error</a> provided in many polls.</p>
+
+<p>As <a href="https://fivethirtyeight.com/features/the-polls-were-skewed-toward-democrats/">Nate Silver has alluded to</a>, if the forecaster does not account unobserved error, including error that may be correlated across surveys — he/she will artificially inflate the estimated probability of victory or defeat. Of course, FiveThirtyEight <em>does</em> attempt to account for this error, and released far more conservative forecasts than others in this space in 2016.</p>
+
+<p>Speaking in part to this issue, <a href="http://www.stat.columbia.edu/~gelman/research/published/what_learned_in_2016_5.pdf">Andrew Gelman and Julia Azari</a> recently concluded that “polling uncertainty could best be expressed not by speculative win probabilities but rather by using the traditional estimate and margin of error.” They seemed to be speaking about other forecasters, and did not directly reference FiveThirtyEight.</p>
+
+<p>At the end of the day, it’s easy to see that a vote share projection of 55% means that “55% of the votes will go to Candidate A, according to our polling data and assumptions.” However, it’s less clear that an 87% win probability means that “if the election were held 1000 times, Candidate A would win 870 times, and lose 130 times, based on our polling data and assumptions.”</p>
+
+<p>And most critically, we show that probabilistic forecasts showing more of a blowout could potentially lower voting. In Study 1, we provide limited evidence of this based on self reports. In Study 2, we show that when participants are faced with incentives designed to simulate real world voting, they are less likely to vote when probabilistic forecasts show higher odds of one candidate winning. Yet they are not responsive to changes in vote share.</p>
+
+<p><img src="/assets/img/FT_18.01.03_prob_vote.png" alt="normal" /></p>
+
+<p><strong>What’s with our mapping between vote share and probability?</strong></p>
+
+<p>The podcast questions how a 55% vote share with a 2% margin of error is equivalent to an 87% win probability. This illustrates a common problem people have when trying to understand win probabilities — -it’s difficult to reason about the relationship between win-probabilities and vote share without actually running the numbers.</p>
+
+<p>You can express a projection as either (1) the average vote share (can be an electoral college vote share or the popular vote share)</p>
+
+<script type="math/tex; mode=display">\hat \mu_v = \frac{1}{N}\sum_{i}^{N}\bar x_i</script>
+
+<p>and margin of error</p>
+
+<script type="math/tex; mode=display">\hat \mu_v \pm T^{0.975}_{df = N} \times \frac{ \hat \sigma_v}{\sqrt N}</script>
+
+<p>Here the average for each survey is <script type="math/tex">\bar x_i</script>, and there are <script type="math/tex">N = 20</script> surveys.</p>
+
+<p>Or (2) the probability of winning — the probability that the vote share is greater than half, based on the observed vote share and standard error:</p>
+
+<script type="math/tex; mode=display">1 - \Phi \left (\frac{\hat \mu_v - .5}{\hat\sigma_v} \right )</script>
+
+<p>Going back to the example above, here’s the R code to generate those quantities:</p>
+
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">svy_mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.55</span><span class="w"> 
+</span><span class="n">svy_SD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.04483415</span><span class="w"> </span><span class="c1"># see appendix </span><span class="w">
+</span><span class="n">N_svy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="w"> 
+</span><span class="n">margin_of_error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">qt</span><span class="p">(</span><span class="m">.975</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">N_svy</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">svy_SD</span><span class="o">/</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">N_svy</span><span class="p">)</span><span class="w"> 
+
+</span><span class="n">svy_mean</span><span class="w"> 
+</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">0.55</span><span class="w"> 
+
+</span><span class="n">margin_of_error</span><span class="w"> 
+</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">0.02091224</span><span class="w"> 
+
+</span><span class="n">prob_win</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="o">-</span><span class="n">pnorm</span><span class="p">(</span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.50</span><span class="p">,</span><span class="w"> </span><span class="n">mean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">svy_mean</span><span class="p">,</span><span class="w"> </span><span class="n">sd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">svy_SD</span><span class="p">)</span><span class="w"> 
+</span><span class="n">prob_win</span><span class="w"> 
+</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">0.8676222</span><span class="w"> </span></code></pre></figure>
+
+<p>More details about this approach are in our appendix. This is similar to how the Princeton Election Consortium generated win probabilities in 2016.</p>
+
+<p>Of course, one can also use an approach based on simulation, as FiveThirtyEight does. In the case of the data we generated for our hypothetical election in Study 1, this approach is not necessary. However we recognize that in the case of real-world presidential elections, a simulation approach has clear advantages by virtue of allowing more flexible statistical assumptions and a better accounting of error.</p>
+
+<p><strong>Why does this matter?</strong></p>
+
+<p>To be clear, we are not analyzing real-world election returns. However, a lot of past <a href="https://huber.research.yale.edu/materials/67_paper.pdf">research</a> <a href="http://www2.gsu.edu/~polsnn/priorbeliefs.pdf">shows</a> that when people <a href="https://www.jstor.org/stable/1953324?seq=1#page_scan_tab_contents">think</a> an election is <a href="https://repository.upenn.edu/cgi/viewcontent.cgi?referer=&amp;httpsredir=1&amp;article=1018&amp;context=asc_papers">in the bag</a>, they tend to <a href="https://www.sciencedirect.com/science/article/pii/S0014292115000483">vote in real-world elections</a> at <a href="https://www.jstor.org/stable/2748722?seq=1#page_scan_tab_contents">lower rates</a>. Our study provides evidence that probabilistic forecasts give people more confidence that one candidate will win and suggestive evidence that we should expect them to vote at lower rates after seeing probabilistic forecasts.</p>
+
+<p>This matters <em>a lot more</em> if one candidate’s potential voters are differentially affected, and there’s evidence that may be the case.</p>
+
+<p>1. Figure 2C in Study 1 suggests that the <em>candidate who is ahead</em> in the polls will be more affected by the increased certainty that probabilistic forecasts convey.</p>
+
+<p><img src="/assets/img/certaintyc.png" alt="normal" /></p>
+
+<p>2. When you look at the balance of coverage of probabilistic forecasts on major television broadcasts, there is more coverage on MSNBC, which has a more liberal audience.</p>
+
+<p><img src="/assets/img/msnbc_mentions.png" alt="half" /></p>
+
+<p>3. Consider who shares this material in social media–specifically the average self-reported ideology of people who share links to various sites hosting poll-aggregators on Facebook, data that come from <a href="http://science.sciencemag.org/content/early/2015/05/06/science.aaa1160.full">this paper</a>’s <a href="http://dx.doi.org/10.7910/DVN/LDJ7MS">replication materials</a>. The websites that present their results in terms of probabilities have left-leaning (negative) social media audiences. Only realclearpolitics.com, which doesn’t emphasize win-probabilities, has a conservative audience:</p>
+
+<p><img src="/assets/img/bma_science_alignment.png" alt="half" /></p>
+
+<p>4. In 2016, the proportion of American National Election Study (ANES) respondents who thought the leading candidate would “win by quite a bit” was unusually high for Democrats…</p>
+
+<p><img src="/assets/img/anes_turnout_closerace_mc_tall.png" alt="normal" /></p>
+
+<p>5. And we know that people who say the leading presidential candidate will “win by quite a bit” in pre-election polling are about three percentage points less likely to report voting shortly after the election than people who say it’s a close race — and that’s after conditioning on election year, prior turnout, and party identification. The data here are from the ANES and go back to 1952.</p>
+
+<p><img src="/assets/img/closerace_vote_anes.png" alt="normal" /></p>
+
+<p>These data do not conclusively show that probabilistic forecasts affected turnout in the 2016 election, but they do raise questions about the real world consequences of probabilistic forecasts.</p>
+
+<p><strong>What about media narratives?</strong></p>
+
+<p>We acknowledge that these effects may change depending on the context in which people encounter them — though people can certainly encounter a lone probability number in media coverage of probabilistic forecasts. We also acknowledge that our work cannot address how these effects compare to and/or interact with media narratives.</p>
+
+<p>However, other work that is relevant to this question has found that aggregating all polls <a href="https://academic.oup.com/poq/article-abstract/80/4/943/2738970?redirectedFrom=fulltext">reduces the likelihood that news outlets</a> focus on unusual polls that are more sensational or support a particular narrative.</p>
+
+<p>In some ways, the widespread success and reliance on these forecasts represents a triumph of scientific communication. In addition to greater precision compared with one-off horserace polls, probabilistic forecasts can quantify how likely a given U.S. presidential candidate is to win using polling data and complex simulation, rather than leaving the task of making sense of state and national polls to speculative commentary about “paths to victory,” as we point out in the <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3117054">paper</a>. And as one of the hosts noted, we aren’t calling for an end to election projections.</p>
+
+<p><strong>Future work</strong></p>
+
+<p>We agree with the hosts that there are open questions about whether the public gives more weight to these probabilistic forecasts than other polling results and speculative commentary. We have also heard questions raised about how much probabilistic forecasts might <em>drive</em> media narratives. These questions may prove difficult to answer and we encourage research that explores them.</p>
+
+<p>We hope this research continues to create a dialogue about how to best communicate polling data to the public. We would love to see more research into how the public consumes and is affected by election projections, including finding the most effective ways to convey uncertainty.</p>
+
+  </article>
+
+<!-- 
+  
+ -->
+
+
+
+ 
+
+
+
+</div>
+
+      </div>
+    </div>
+
+    <footer>
+
+  <div class="wrapper">
+    &copy; Copyright 2020 Solomon Messing.
+    
+    
+  </div>
+
+</footer>
+
+
+    <!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"></script>
+<script src="/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css">
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-27273977-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+
+</html>

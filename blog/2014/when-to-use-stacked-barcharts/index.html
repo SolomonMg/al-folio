@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+
+  <!-- Mathjax Support -->
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Solomon Messing | When to Use Stacked Barcharts?</title>
+  <meta name="description" content="Research Scientist. Manager of data science for Social Science One at  Facebook, former (founding) Director at Pew Research Center’s Data Labs.
+">
+
+  <link rel="shortcut icon" href="/assets/img/favicon.ico">
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="canonical" href="/blog/2014/when-to-use-stacked-barcharts/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <span class="site-title">
+        
+        <strong>Solomon Messing</strong>
+    </span>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+      <div class="trigger">
+        
+        <!-- CV -->
+        <a class="page-link" href="/assets/pdf/CV.pdf">CV</a>
+
+        <!-- About -->
+        
+          <a class="page-link" href="/">about</a>
+        
+
+        <!-- Blog -->
+        
+          <a class="page-link" href="/blog/">blog</a>
+        
+
+
+        <!-- Pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            
+              <a class="page-link" href="/projects/">projects</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/publications/">publications</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/teaching/">teaching</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/techsetup/">tech stack</a>
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+    <!--     
+          
+            <li><a href="/cv"></a></li>
+          
+        
+          
+            <li><a href="/"></a></li>
+          
+        
+          
+            <li><a href="/blog/"></a></li>
+          
+        
+          
+            <li><a href="/assets/css/main.css"></a></li>
+          
+        
+          
+            <li><a href="/projects/">projects</a></li>
+          
+        
+          
+            <li><a href="/publications/">publications</a></li>
+          
+        
+          
+            <li><a href="/teaching/">teaching</a></li>
+          
+        
+          
+            <li><a href="/techsetup/">tech stack</a></li>
+          
+        
+          
+            <li><a href="/assets/css/style.css"></a></li>
+          
+        
+          
+            <li><a href="/assets/pdf/cv/"></a></li>
+          
+        
+          
+            <li><a href="/2012/03/04/visualization-series-insight-from-cleveland-and-tufte-on-plotting-numeric-data-by-groups/"></a></li>
+          
+        
+          
+            <li><a href="/2012/09/30/working-with-bipartiteaffiliation-network-data-in-r/"></a></li>
+          
+        
+          
+            <li><a href="/2014/10/11/when-to-use-stacked-barcharts/"></a></li>
+          
+        
+          
+            <li><a href="/2015/05/24/exposure-to-ideologically-diverse-news-and-opinion-future-research/"></a></li>
+          
+        
+          
+            <li><a href="/2017/10/16/replication-of-study-2-in-bias-in-the-flesh-skin-complexion-and-stereotype-consistency-in-political-campaigns/"></a></li>
+          
+        
+          
+            <li><a href="/blog/2014/visualization-series-the-scatterplot-and-understanding-the-diamond-market/"></a></li>
+          
+        
+          
+            <li><a href="/2018/02/16/response-to-fivethirtyeights-podcast-about-our-paper-projecting-confidence/"></a></li>
+          
+        
+          
+            <li><a href="/research/"></a></li>
+          
+        
+          
+            <li><a href="/redirects.json"></a></li>
+          
+         -->
+
+
+        <!-- CV link -->
+        <!-- <a class="page-link" href="/assets/pdf/CV.pdf">vitae</a> -->
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">When to Use Stacked Barcharts?</h1>
+    <p class="post-meta">October 11, 2014</p>
+  </header>
+
+  <article class="post-content">
+    <p><img src="/assets/img/c6192637b5d6e48a1613d69e6a92dfa5b331f38f.png" alt="normal" /></p>
+
+<p>Yesterday a few of us on Facebook’s Data Science Team released a <a href="https://www.facebook.com/notes/10152581594083859/">blogpost showing how candidates are campaigning on Facebook in the 2014 U.S. midterm elections</a>. It was <a href="http://www.washingtonpost.com/blogs/govbeat/wp/2014/10/10/how-candidates-use-facebook-motivation-more-than-persuasion/">picked up in the Washington Post</a>, in which <a href="http://www.washingtonpost.com/people/reid-wilson">Reid Wilson</a> calls us "data wizards." Outstanding.</p>
+
+<p>I used <a href="http://had.co.nz/">Hadly Wickham's</a> ggplot2 for every visualization in the post except a map that <a href="http://web.stanford.edu/~arjunw/">Arjun Wilkins</a> produced using D3, and for the first time I used stacked bar charts.  Now as I've stated previously, <a href="http://solomonmessing.wordpress.com/2012/03/04/visualization-series-insight-from-cleveland-and-tufte-on-plotting-numeric-data-by-groups/">one should generally avoid bar charts, and especially stacked bar charts</a>, except in a few specific circumstances.</p>
+
+<p>But let's talk about when not to use stacked bar charts first---I had the pleasure of chatting with Kaiser Fung of <a href="http://junkcharts.typepad.com/">JunkCharts</a> fame the other day, and I think what makes his site so compelling is the mix of schadenfreude and <a href="http://betterthanenglish.com/fremdscham-german/">Fremdscham</a> that makes taking apart someone else's mistake such an effective teaching strategy and such a memorable read. I also appreciate the subtle nod to <a href="https://en.wikipedia.org/wiki/Found_object">junk art</a>.</p>
+
+<p>Here's a typical, terrible stacked bar chart, which I found on http://www.storytellingwithdata.com/ and originally published on a <a href="http://blogs.wsj.com/digits/2012/10/22/microsoft-windows-8-forrester/">Wall Street Journal blogpost</a>. It shows the share of the personal computing device market by operating system, over time. The problem with using a stacked bar chart is that there are only two common baselines for comparison (the top and bottom of the plotting area), but we are interested in the relative share for more than two OS brands. The post is really concerned with Microsoft, so one solution would be to plot Microsoft versus the rest, or perhaps Microsoft on top versus Apple on the bottom with "Other" in the middle. Then we'd be able to compare the over time market share for Apple and Microsoft. As the author points out, an over time trend can also be visualized with line plots.</p>
+
+<p><img src="/assets/img/b5e194c5114b79478a7ffcf600b18cd205a3a1b7.jpg" alt="" /></p>
+
+<p>By far the worst offender I found in my 5 minute Google search was <a href="http://junkcharts.typepad.com/junk_charts/2014/08/one-guaranteed-to-make-stephen-few-cry-.html">from junkcharts</a> and originally published on <a href="http://www.vox.com/2014/7/28/5944065/electric-cars-plug-in-vehicles-rising-sales-US">Vox</a>. These cumulative sum plots are so bad I was surprised to see them still up. The first problem is that the plots represent an attempt to convey way too much information---either plot total sales or pick a few key brands that are most interesting and plot them on a multi-line chart or set of faceted time series plots. The only brand for which you can quickly get a sense of sales over time is the Chevy Volt because it's on the baseline. I'm sure the authors wanted to also convey the proportion of sales each year, but if you want to do that just plot the relative sales. Of course, the order in which the bars appear on the plot has no organizing principle, and you need to constantly move your eyes back and forth from the legend to the plot when trying to make sense of this monstrosity.</p>
+
+<p><img src="/assets/img/a1281b5624937d4bf8069706e74028aeb8f9952d.png" alt="" /></p>
+
+<p>As Kaiser notes in his post, less is often more. Here's his redux, which uses lines and aggregates by both quarter and brand, resulting in a far superior visualization:</p>
+
+<p><img src="/assets/img/df59a98319dbf363b90514243d0ded9d9aa191ce.png" alt="" /></p>
+
+<p>So when *should* you use a stacked bar chart? Here are a two scenarios with examples, inspired by work with <a href="http://eytan.github.io/">Eytan Bakshy</a> and conversations with <a href="http://ta.virot.me/">Ta Chiraphadhanakul</a> and <a href="http://www.johnmyleswhite.com/">John Myles White</a>.</p>
+
+<p>1. You care about comparing the proportion of two things, in this case the share of posts by Democrats and Republicans, along a variety of dimensions.  In this case those dimensions consist of keyword (dictionary-based) categories (above) and LDA topics (below).  When these are sorted by relative proportion, the reader gains insight into which campaign strategies and issues are used more by Republican or Democratic candidates.</p>
+
+<p><img src="/assets/img/b16c48bc6a47363ced0e685cb506df99e15e0a73.png" alt="" /></p>
+
+<ol>
+  <li>You care about comparing proportions along an ordinal, additive variable such as 5-point party identification, along a set of dimensions.  I provide an example from a forthcoming paper below (I'll re-insert the axis labels once it's published).  Notice that it draws the reader toward two sets of comparisons across dimensions -- one for strong democrats and republicans, the other for the set of *all* Democrats and *all* Republicans.</li>
+</ol>
+
+<p><img src="/assets/img/312fb516b818733414acbe395ded53b8424f37a2.png" alt="" /></p>
+
+<p>Of course, R code to produce these plots follows:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre></td><td class="rouge-code"><pre><span class="c1"># Uncomment these lines and install if necessary:</span><span class="w">
+</span><span class="c1">#install.packages('ggplot2')</span><span class="w">
+</span><span class="c1">#install.packages('dplyr')</span><span class="w">
+</span><span class="c1">#install.packages('scales')</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">scales</span><span class="p">)</span><span class="w">
+</span><span class="c1"># We start with the raw number of posts for each party for</span><span class="w">
+</span><span class="c1"># each candidate. Then we compute the total by party and</span><span class="w">
+</span><span class="c1"># category.</span><span class="w">
+</span><span class="n">catsByParty</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">group_by</span><span class="p">(</span><span class="n">party</span><span class="p">,</span><span class="w"> </span><span class="n">all_cats</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+</span><span class="n">summarise</span><span class="p">(</span><span class="n">tot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">summ</span><span class="p">(</span><span class="n">posts</span><span class="p">))</span><span class="w">
+</span><span class="c1"># Next, compute the proportion by party for each category</span><span class="w">
+</span><span class="c1"># using dplyr::mutate</span><span class="w">
+</span><span class="n">catsByParty</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">catsByParty</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+</span><span class="n">group_by</span><span class="p">(</span><span class="n">all_cats</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+</span><span class="n">mutate</span><span class="p">(</span><span class="n">prop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tot</span><span class="o">/</span><span class="nf">sum</span><span class="p">(</span><span class="n">tot</span><span class="p">))</span><span class="w">
+</span><span class="c1"># Now compute the difference by category and order the</span><span class="w">
+</span><span class="c1"># categories by that difference:</span><span class="w">
+</span><span class="n">catsByParty</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">catsByParty</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">group_by</span><span class="p">(</span><span class="n">all_cats</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+</span><span class="n">mutate</span><span class="p">(</span><span class="n">pdiff</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diff</span><span class="p">(</span><span class="n">prop</span><span class="p">))</span><span class="w">
+</span><span class="n">catsByParty</span><span class="o">$</span><span class="n">all_cats</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">reorder</span><span class="p">(</span><span class="n">catsByParty</span><span class="o">$</span><span class="n">all_cats</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="n">catsByParty</span><span class="o">$</span><span class="n">pdiff</span><span class="p">)</span><span class="w">
+</span><span class="c1"># And plot:</span><span class="w">
+</span><span class="n">ggplot</span><span class="p">(</span><span class="n">catsByParty</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">all_cats</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="n">prop</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="o">=</span><span class="n">party</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">percent_format</span><span class="p">())</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">geom_bar</span><span class="p">(</span><span class="n">stat</span><span class="o">=</span><span class="s1">'identity'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="o">=</span><span class="m">.5</span><span class="p">,</span><span class="w"> </span><span class="n">linetype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'dashed'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">coord_flip</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">ylab</span><span class="p">(</span><span class="s1">'Democrat/Republican share of page posts'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">xlab</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s1">'blue'</span><span class="p">,</span><span class="w"> </span><span class="s1">'red'</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s1">'none'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">ggtitle</span><span class="p">(</span><span class="s1">'Political Issues Discussed by Party\n'</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+  </article>
+
+<!-- 
+  
+ -->
+
+
+
+ 
+
+
+
+</div>
+
+      </div>
+    </div>
+
+    <footer>
+
+  <div class="wrapper">
+    &copy; Copyright 2020 Solomon Messing.
+    
+    
+  </div>
+
+</footer>
+
+
+    <!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"></script>
+<script src="/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css">
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-27273977-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+
+</html>

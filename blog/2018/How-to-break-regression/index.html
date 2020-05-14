@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html>
+
+  <!-- Mathjax Support -->
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Solomon Messing | How to break regression</title>
+  <meta name="description" content="Research Scientist. Manager of data science for Social Science One at  Facebook, former (founding) Director at Pew Research Center’s Data Labs.
+">
+
+  <link rel="shortcut icon" href="/assets/img/favicon.ico">
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="canonical" href="/blog/2018/How-to-break-regression/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <span class="site-title">
+        
+        <strong>Solomon Messing</strong>
+    </span>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+      <div class="trigger">
+        
+        <!-- CV -->
+        <a class="page-link" href="/assets/pdf/CV.pdf">CV</a>
+
+        <!-- About -->
+        
+          <a class="page-link" href="/">about</a>
+        
+
+        <!-- Blog -->
+        
+          <a class="page-link" href="/blog/">blog</a>
+        
+
+
+        <!-- Pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            
+              <a class="page-link" href="/projects/">projects</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/publications/">publications</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/teaching/">teaching</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/techsetup/">tech stack</a>
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+    <!--     
+          
+            <li><a href="/cv"></a></li>
+          
+        
+          
+            <li><a href="/"></a></li>
+          
+        
+          
+            <li><a href="/blog/"></a></li>
+          
+        
+          
+            <li><a href="/assets/css/main.css"></a></li>
+          
+        
+          
+            <li><a href="/projects/">projects</a></li>
+          
+        
+          
+            <li><a href="/publications/">publications</a></li>
+          
+        
+          
+            <li><a href="/teaching/">teaching</a></li>
+          
+        
+          
+            <li><a href="/techsetup/">tech stack</a></li>
+          
+        
+          
+            <li><a href="/assets/css/style.css"></a></li>
+          
+        
+          
+            <li><a href="/assets/pdf/cv/"></a></li>
+          
+        
+          
+            <li><a href="/2012/03/04/visualization-series-insight-from-cleveland-and-tufte-on-plotting-numeric-data-by-groups/"></a></li>
+          
+        
+          
+            <li><a href="/2012/09/30/working-with-bipartiteaffiliation-network-data-in-r/"></a></li>
+          
+        
+          
+            <li><a href="/2014/10/11/when-to-use-stacked-barcharts/"></a></li>
+          
+        
+          
+            <li><a href="/2015/05/24/exposure-to-ideologically-diverse-news-and-opinion-future-research/"></a></li>
+          
+        
+          
+            <li><a href="/2017/10/16/replication-of-study-2-in-bias-in-the-flesh-skin-complexion-and-stereotype-consistency-in-political-campaigns/"></a></li>
+          
+        
+          
+            <li><a href="/blog/2014/visualization-series-the-scatterplot-and-understanding-the-diamond-market/"></a></li>
+          
+        
+          
+            <li><a href="/2018/02/16/response-to-fivethirtyeights-podcast-about-our-paper-projecting-confidence/"></a></li>
+          
+        
+          
+            <li><a href="/research/"></a></li>
+          
+        
+          
+            <li><a href="/redirects.json"></a></li>
+          
+         -->
+
+
+        <!-- CV link -->
+        <!-- <a class="page-link" href="/assets/pdf/CV.pdf">vitae</a> -->
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">How to break regression</h1>
+    <p class="post-meta">June 13, 2018</p>
+  </header>
+
+  <article class="post-content">
+    <p><img src="https://cdn-images-1.medium.com/max/1600/1*_COjgiypANy8byDnexEFIQ.png" alt="" />(Photo illustration by Pew Research Center and iStock.com/Eshma)</p>
+
+<p>Regression models are a cornerstone of modern social science. They’re at the heart of efforts to estimate causal relationships between variables in a multivariate environment and are the basic building blocks of many machine learning models. Yet social scientists can run into a lot of situations where regression models break.</p>
+
+<p>Famed social psychologist Richard Nisbett <a href="https://www.edge.org/conversation/richard_nisbett-the-crusade-against-multiple-regression-analysis">recently argued</a> that regression analysis is so misused and misunderstood that analyses based on multiple regression “are often somewhere between meaningless and quite damaging.” (He was mainly talking about cases in which researchers publish correlational results that are covered in the media as causal statements about the world.)</p>
+
+<p>Below, I’ll walk through some of the potential pitfalls you might encounter when you fire up your favorite <a href="https://seanjtaylor.com/post/39573264781/the-statistics-software-signal">statistical software</a> package and run regressions. Specifically, I’ll be using simulation in R as an educational tool to help you better understand the ways in which regressions can break.</p>
+
+<p><strong>Using simulations to unpack regression</strong></p>
+
+<p>The idea of using R simulations to help understand regression models was inspired by Ben Ogorek’s <a href="http://anythingbutrbitrary.blogspot.com/2016/01/how-to-create-confounders-with.html">post</a> on regression confounders and collider bias.</p>
+
+<p>The great thing about using simulation in this way is that you control the world that generates your data. The code I’ll introduce below represents the true <em>data-generating process</em>,since I’m using R’s random number generators to simulate the data. In real life, of course, we only have the data we observe, and we don’t really know how the data-generating process works unless we have a solid theory (like Newtonian physics or evolution) where the system of relevant variables and causal relationships is well understood and to which there is really no analogous phenomenon in social science.</p>
+
+<p>What I’ll do here is create a dataset based on two random standard normal variables by simulating them using the <em>rnorm()</em> function, which draws random values from a normal distribution with mean 0 and standard deviation 1, unless you specify otherwise. I’ll create a functional relationship between y and x such that a 1 unit increase in x will be associated with a .4 unit increase in y.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+</pre></td><td class="rouge-code"><pre><span class="c1"># make the code reproducible by setting a random number seed</span><span class="w">
+</span><span class="n">set.seed</span><span class="p">(</span><span class="m">100</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># When everything works:</span><span class="w">
+</span><span class="n">N</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">
+</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">.4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">
+</span><span class="n">hist</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Now estimate our model:</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">))</span><span class="w">
+
+</span><span class="n">Call</span><span class="o">:</span><span class="w">
+</span><span class="n">lm</span><span class="p">(</span><span class="n">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w">
+</span><span class="n">Residuals</span><span class="o">:</span><span class="w">
+    </span><span class="n">Min</span><span class="w">      </span><span class="m">1</span><span class="n">Q</span><span class="w">  </span><span class="n">Median</span><span class="w">      </span><span class="m">3</span><span class="n">Q</span><span class="w">     </span><span class="n">Max</span><span class="w"> 
+</span><span class="m">-3.0348</span><span class="w"> </span><span class="m">-0.7013</span><span class="w">  </span><span class="m">0.0085</span><span class="w">  </span><span class="m">0.6212</span><span class="w">  </span><span class="m">3.1688</span><span class="w"> 
+</span><span class="n">Coefficients</span><span class="o">:</span><span class="w">
+            		</span><span class="n">Estimate</span><span class="w"> </span><span class="n">Std.</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">Pr</span><span class="p">(</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span><span class="p">)</span><span class="w">    
+</span><span class="p">(</span><span class="n">Intercept</span><span class="p">)</span><span class="w"> 	</span><span class="m">0.003921</span><span class="w">   </span><span class="m">0.031039</span><span class="w">   </span><span class="m">0.126</span><span class="w">    </span><span class="m">0.899</span><span class="w">    
+</span><span class="n">x</span><span class="w">           	</span><span class="m">0.413415</span><span class="w">   </span><span class="m">0.030129</span><span class="w">  </span><span class="m">13.722</span><span class="w">   </span><span class="o">&lt;</span><span class="m">2e-16</span><span class="w"> </span><span class="o">***</span><span class="w">
+</span><span class="o">---</span><span class="w">
+</span><span class="n">Signif.</span><span class="w"> </span><span class="n">codes</span><span class="o">:</span><span class="w">  </span><span class="m">0</span><span class="w"> </span><span class="err">‘</span><span class="o">***</span><span class="err">’</span><span class="w"> </span><span class="m">0.001</span><span class="w"> </span><span class="err">‘</span><span class="o">**</span><span class="err">’</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="err">‘</span><span class="o">*</span><span class="err">’</span><span class="w"> </span><span class="m">0.05</span><span class="w"> </span><span class="err">‘</span><span class="n">.</span><span class="err">’</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="err">‘</span><span class="w"> </span><span class="err">’</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="n">Residual</span><span class="w"> </span><span class="n">standard</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="m">0.9814</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">998</span><span class="w"> </span><span class="n">degrees</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">freedom</span><span class="w">
+</span><span class="n">Multiple</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.1587</span><span class="p">,</span><span class="w">	</span><span class="n">Adjusted</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.1579</span><span class="w"> 
+</span><span class="nb">F</span><span class="o">-</span><span class="n">statistic</span><span class="o">:</span><span class="w"> </span><span class="m">188.3</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="m">998</span><span class="w"> </span><span class="n">DF</span><span class="p">,</span><span class="w">  </span><span class="n">p</span><span class="o">-</span><span class="n">value</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">2.2e-16</span><span class="w">
+
+</span><span class="c1"># Plot it</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">qplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'lm'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"The Perfect Regression"</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Notice that the model estimates the functional relationship between x and y that I simulated quite well. The plot looks like this:</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*0zIR7Mtuak5DamPOgEiHog.png" alt="" /></p>
+
+<p>What about omitted variables? Our machinery actually still works if there is another factor causing y, as long as it is <em>uncorrelated</em> with x.</p>
+
+<p><strong>The dreaded omitted variable bias</strong></p>
+
+<p>Omitted variable bias (OVB) is much feared, and judging by the top internet search results, not well understood. Some top sources say it occurs when “<a href="http://carecon.org.uk/UWEcourse/OVbias.pdf">an important</a>” variable is missing or when a variable that “<a href="https://en.wikipedia.org/wiki/Omitted-variable_bias">is correlated</a>” with both x and y is missing. I even found a university <a href="http://www3.wabash.edu/econometrics/EconometricsBook/chap18.htm">econometrics</a> course that defined OVB this way.</p>
+
+<p>But neither of those definitions are quite right. OVB occurs when a variable that <em>causes</em> y is missing from the model (and is correlated with x). Let’s call that variable w. Because w is in play when we consider the causal relationship between x and y, it’s often referred to as “endogenous” or a “confounding variable.”</p>
+
+<p>The example below first demonstrates that w, our confounding variable, will bias our results if we fail to include it in our model. The next two examples are essentially a re-telling of the <a href="http://anythingbutrbitrary.blogspot.com/2016/01/how-to-create-confounders-with.html">post I mentioned above</a> on collider bias, but emphasizing slightly different points.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td><td class="rouge-code"><pre><span class="n">w</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">.5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+</span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">.4</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">.3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+
+</span><span class="n">m1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="w"> </span><span class="p">(</span><span class="n">m1</span><span class="p">)</span><span class="w"> </span><span class="c1"># Omitted variable bias</span><span class="w">
+
+</span><span class="n">Call</span><span class="o">:</span><span class="w">
+</span><span class="n">lm</span><span class="p">(</span><span class="n">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w">
+
+</span><span class="n">Residuals</span><span class="o">:</span><span class="w">
+    </span><span class="n">Min</span><span class="w">      </span><span class="m">1</span><span class="n">Q</span><span class="w">  </span><span class="n">Median</span><span class="w">      </span><span class="m">3</span><span class="n">Q</span><span class="w">     </span><span class="n">Max</span><span class="w"> 
+</span><span class="m">-3.2190</span><span class="w"> </span><span class="m">-0.7025</span><span class="w">  </span><span class="m">0.0314</span><span class="w">  </span><span class="m">0.7120</span><span class="w">  </span><span class="m">3.1158</span><span class="w"> 
+
+</span><span class="n">Coefficients</span><span class="o">:</span><span class="w">
+            </span><span class="n">Estimate</span><span class="w"> </span><span class="n">Std.</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">Pr</span><span class="p">(</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span><span class="p">)</span><span class="w">    
+</span><span class="p">(</span><span class="n">Intercept</span><span class="p">)</span><span class="w">  </span><span class="m">0.01126</span><span class="w">    </span><span class="m">0.03310</span><span class="w">    </span><span class="m">0.34</span><span class="w">    </span><span class="m">0.734</span><span class="w">    
+</span><span class="n">x</span><span class="w">            </span><span class="m">0.50179</span><span class="w">    </span><span class="m">0.03049</span><span class="w">   </span><span class="m">16.46</span><span class="w">   </span><span class="o">&lt;</span><span class="m">2e-16</span><span class="w"> </span><span class="o">***</span><span class="w">
+</span><span class="o">---</span><span class="w">
+</span><span class="n">Signif.</span><span class="w"> </span><span class="n">codes</span><span class="o">:</span><span class="w">  </span><span class="m">0</span><span class="w"> </span><span class="err">‘</span><span class="o">***</span><span class="err">’</span><span class="w"> </span><span class="m">0.001</span><span class="w"> </span><span class="err">‘</span><span class="o">**</span><span class="err">’</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="err">‘</span><span class="o">*</span><span class="err">’</span><span class="w"> </span><span class="m">0.05</span><span class="w"> </span><span class="err">‘</span><span class="n">.</span><span class="err">’</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="err">‘</span><span class="w"> </span><span class="err">’</span><span class="w"> </span><span class="m">1</span><span class="w">
+
+</span><span class="n">Residual</span><span class="w"> </span><span class="n">standard</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="m">1.046</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">998</span><span class="w"> </span><span class="n">degrees</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">freedom</span><span class="w">
+</span><span class="n">Multiple</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.2135</span><span class="p">,</span><span class="w">	</span><span class="n">Adjusted</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.2127</span><span class="w"> 
+</span><span class="nb">F</span><span class="o">-</span><span class="n">statistic</span><span class="o">:</span><span class="w"> </span><span class="m">270.9</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="m">998</span><span class="w"> </span><span class="n">DF</span><span class="p">,</span><span class="w">  </span><span class="n">p</span><span class="o">-</span><span class="n">value</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">2.2e-16</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>There it is: classic omitted variable bias. We only observed x, and the influence of the omitted variable w was attributed to x in our model. If you re-rerun the regression with w in the model, you no longer get biased estimates.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="rouge-code"><pre><span class="n">m2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w</span><span class="p">)</span><span class="w">
+</span><span class="n">summary</span><span class="w"> </span><span class="p">(</span><span class="n">m2</span><span class="p">)</span><span class="w"> </span><span class="c1"># No omitted variable bias after conditioning on w</span><span class="w">
+
+</span><span class="n">Call</span><span class="o">:</span><span class="w">
+</span><span class="n">lm</span><span class="p">(</span><span class="n">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">w</span><span class="p">)</span><span class="w">
+
+</span><span class="n">Residuals</span><span class="o">:</span><span class="w">
+    </span><span class="n">Min</span><span class="w">      </span><span class="m">1</span><span class="n">Q</span><span class="w">  </span><span class="n">Median</span><span class="w">      </span><span class="m">3</span><span class="n">Q</span><span class="w">     </span><span class="n">Max</span><span class="w"> 
+</span><span class="m">-3.2748</span><span class="w"> </span><span class="m">-0.6632</span><span class="w"> </span><span class="m">-0.0001</span><span class="w">  </span><span class="m">0.6933</span><span class="w">  </span><span class="m">2.9664</span><span class="w"> 
+
+</span><span class="n">Coefficients</span><span class="o">:</span><span class="w">
+            </span><span class="n">Estimate</span><span class="w"> </span><span class="n">Std.</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">Pr</span><span class="p">(</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span><span class="p">)</span><span class="w">    
+</span><span class="p">(</span><span class="n">Intercept</span><span class="p">)</span><span class="w">  </span><span class="m">0.02841</span><span class="w">    </span><span class="m">0.03141</span><span class="w">   </span><span class="m">0.905</span><span class="w">    </span><span class="m">0.366</span><span class="w">    
+</span><span class="n">x</span><span class="w">            </span><span class="m">0.40627</span><span class="w">    </span><span class="m">0.03132</span><span class="w">  </span><span class="m">12.973</span><span class="w">   </span><span class="o">&lt;</span><span class="m">2e-16</span><span class="w"> </span><span class="o">***</span><span class="w">
+</span><span class="n">w</span><span class="w">            </span><span class="m">0.32344</span><span class="w">    </span><span class="m">0.03439</span><span class="w">   </span><span class="m">9.405</span><span class="w">   </span><span class="o">&lt;</span><span class="m">2e-16</span><span class="w"> </span><span class="o">***</span><span class="w">
+</span><span class="o">---</span><span class="w">
+</span><span class="n">Signif.</span><span class="w"> </span><span class="n">codes</span><span class="o">:</span><span class="w">  </span><span class="m">0</span><span class="w"> </span><span class="err">‘</span><span class="o">***</span><span class="err">’</span><span class="w"> </span><span class="m">0.001</span><span class="w"> </span><span class="err">‘</span><span class="o">**</span><span class="err">’</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="err">‘</span><span class="o">*</span><span class="err">’</span><span class="w"> </span><span class="m">0.05</span><span class="w"> </span><span class="err">‘</span><span class="n">.</span><span class="err">’</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="err">‘</span><span class="w"> </span><span class="err">’</span><span class="w"> </span><span class="m">1</span><span class="w">
+
+</span><span class="n">Residual</span><span class="w"> </span><span class="n">standard</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="m">0.9927</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">997</span><span class="w"> </span><span class="n">degrees</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">freedom</span><span class="w">
+</span><span class="n">Multiple</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.3024</span><span class="p">,</span><span class="w">	</span><span class="n">Adjusted</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.301</span><span class="w"> 
+</span><span class="nb">F</span><span class="o">-</span><span class="n">statistic</span><span class="o">:</span><span class="w"> </span><span class="m">216.1</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="m">997</span><span class="w"> </span><span class="n">DF</span><span class="p">,</span><span class="w">  </span><span class="n">p</span><span class="o">-</span><span class="n">value</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">2.2e-16</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Note that the regression errors, also known as residuals, are correlated with w:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Now, recall above that I wrote that it’s wrong to say that OVB occurs when our omitted variable is correlated with both x and y. And yet w, x and w and y are all correlated in this first example:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">cor</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="n">m1</span><span class="o">$</span><span class="n">residuals</span><span class="p">)</span><span class="w">
+</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="m">0.2597859</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>So why can’t we just say that OVB occurs when our omitted variable is correlated with both x and y? As the next example will show, correlation isn’t enough — w needs to <em>cause</em> both x and y. We can easily imagine a case in which we don’t have causality but we still see this kind of correlation — when x and y both cause w.</p>
+
+<p>Let’s make this a little more concrete. Suppose we care about the effect of news media consumption (x) on voter turnout (y). One factor that some researchers think may cause both news media consumption and turnout is political interest (w). If we only measure media consumption and voter turnout, political interest is likely to confound our estimates.</p>
+
+<p>But another school of thought from social psychology — along the lines of self-perception theory and <a href="https://en.wikipedia.org/wiki/Cognitive_dissonance">cognitive dissonance</a> — suggests that the causality could be reversed: Voting behavior might be mostly determined by other factors, and casting a ballot might prompt us to be <em>more</em> interested in political developments in the future. Similarly, watching the news might prompt us to become <em>more</em> interested in politics. Let’s suppose that second school of thought is right. If so, our simulated data will look like this:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="rouge-code"><pre><span class="n">media_consumption_x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+</span><span class="n">voter_turnout_y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">.1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">media_consumption_x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Political interest increases after consuming media and participating, and, </span><span class="w">
+</span><span class="c1"># in this hypothetical world, does *not* increase media consuption or participation</span><span class="w">
+</span><span class="n">political_interest_w</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1.2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">media_consumption_x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">.6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">voter_turnout_y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+
+</span><span class="n">cormat</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">cor</span><span class="p">(</span><span class="n">as.matrix</span><span class="p">(</span><span class="n">data.frame</span><span class="p">(</span><span class="n">media_consumption_x</span><span class="p">,</span><span class="w"> </span><span class="n">voter_turnout_y</span><span class="p">,</span><span class="w"> </span><span class="n">political_interest_w</span><span class="p">)))</span><span class="w">
+</span><span class="nf">round</span><span class="p">(</span><span class="n">cormat</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
+
+                     </span><span class="n">media_consumption_x</span><span class="w"> </span><span class="n">voter_turnout_y</span><span class="w"> </span><span class="n">political_interest_w</span><span class="w">
+</span><span class="n">media_consumption_x</span><span class="w">                 </span><span class="m">1.00</span><span class="w">            </span><span class="m">0.11</span><span class="w">                 </span><span class="m">0.70</span><span class="w">
+</span><span class="n">voter_turnout_y</span><span class="w">                     </span><span class="m">0.11</span><span class="w">            </span><span class="m">1.00</span><span class="w">                 </span><span class="m">0.46</span><span class="w">
+</span><span class="n">political_interest_w</span><span class="w">                </span><span class="m">0.70</span><span class="w">            </span><span class="m">0.46</span><span class="w">                 </span><span class="m">1.00</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>As you can see, all factors are again correlated with each other. But this time, if we <em>only</em> include x (media consumption) and y (turnout) in the equation, we get the correct estimate:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="n">lm</span><span class="p">(</span><span class="n">voter_turnout_y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">media_consumption_x</span><span class="p">))</span><span class="w">
+
+</span><span class="n">Call</span><span class="o">:</span><span class="w">
+</span><span class="n">lm</span><span class="p">(</span><span class="n">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">voter_turnout_y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">media_consumption_x</span><span class="p">)</span><span class="w">
+
+</span><span class="n">Residuals</span><span class="o">:</span><span class="w">
+    </span><span class="n">Min</span><span class="w">      </span><span class="m">1</span><span class="n">Q</span><span class="w">  </span><span class="n">Median</span><span class="w">      </span><span class="m">3</span><span class="n">Q</span><span class="w">     </span><span class="n">Max</span><span class="w"> 
+</span><span class="m">-2.8460</span><span class="w"> </span><span class="m">-0.6972</span><span class="w"> </span><span class="m">-0.0076</span><span class="w">  </span><span class="m">0.6702</span><span class="w">  </span><span class="m">3.3925</span><span class="w"> 
+
+</span><span class="n">Coefficients</span><span class="o">:</span><span class="w">
+                    </span><span class="n">Estimate</span><span class="w"> </span><span class="n">Std.</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">Pr</span><span class="p">(</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span><span class="p">)</span><span class="w">    
+</span><span class="p">(</span><span class="n">Intercept</span><span class="p">)</span><span class="w">         </span><span class="m">-0.01202</span><span class="w">    </span><span class="m">0.03217</span><span class="w">  </span><span class="m">-0.374</span><span class="w"> </span><span class="m">0.708839</span><span class="w">    
+</span><span class="n">media_consumption_x</span><span class="w">  </span><span class="m">0.11719</span><span class="w">    </span><span class="m">0.03321</span><span class="w">   </span><span class="m">3.529</span><span class="w"> </span><span class="m">0.000436</span><span class="w"> </span><span class="o">***</span><span class="w">
+</span><span class="o">---</span><span class="w">
+</span><span class="n">Signif.</span><span class="w"> </span><span class="n">codes</span><span class="o">:</span><span class="w">  </span><span class="m">0</span><span class="w"> </span><span class="err">‘</span><span class="o">***</span><span class="err">’</span><span class="w"> </span><span class="m">0.001</span><span class="w"> </span><span class="err">‘</span><span class="o">**</span><span class="err">’</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="err">‘</span><span class="o">*</span><span class="err">’</span><span class="w"> </span><span class="m">0.05</span><span class="w"> </span><span class="err">‘</span><span class="n">.</span><span class="err">’</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="err">‘</span><span class="w"> </span><span class="err">’</span><span class="w"> </span><span class="m">1</span><span class="w">
+
+</span><span class="n">Residual</span><span class="w"> </span><span class="n">standard</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="m">1.014</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">998</span><span class="w"> </span><span class="n">degrees</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">freedom</span><span class="w">
+</span><span class="n">Multiple</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.01233</span><span class="p">,</span><span class="w">	</span><span class="n">Adjusted</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.01134</span><span class="w"> 
+</span><span class="nb">F</span><span class="o">-</span><span class="n">statistic</span><span class="o">:</span><span class="w"> </span><span class="m">12.46</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="m">998</span><span class="w"> </span><span class="n">DF</span><span class="p">,</span><span class="w">  </span><span class="n">p</span><span class="o">-</span><span class="n">value</span><span class="o">:</span><span class="w"> </span><span class="m">0.0004359</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>What makes defining omitted variable bias based on correlation so dangerous is that if we now include w (political interest), we will get a different kind of bias — what’s called <a href="https://en.wikipedia.org/wiki/Collider_%28epidemiology%29">collider bias</a> or <a href="https://www.annualreviews.org/doi/10.1146/annurev-soc-071913-043455">endogenous selection bias</a>.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="n">lm</span><span class="p">(</span><span class="n">voter_turnout_y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">media_consumption_x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">political_interest_w</span><span class="p">))</span><span class="w">
+
+</span><span class="n">Call</span><span class="o">:</span><span class="w">
+</span><span class="n">lm</span><span class="p">(</span><span class="n">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">voter_turnout_y</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">media_consumption_x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">political_interest_w</span><span class="p">)</span><span class="w">
+
+</span><span class="n">Residuals</span><span class="o">:</span><span class="w">
+    </span><span class="n">Min</span><span class="w">      </span><span class="m">1</span><span class="n">Q</span><span class="w">  </span><span class="n">Median</span><span class="w">      </span><span class="m">3</span><span class="n">Q</span><span class="w">     </span><span class="n">Max</span><span class="w"> 
+</span><span class="m">-2.1569</span><span class="w"> </span><span class="m">-0.5981</span><span class="w"> </span><span class="m">-0.0129</span><span class="w">  </span><span class="m">0.5701</span><span class="w">  </span><span class="m">2.8356</span><span class="w"> 
+
+</span><span class="n">Coefficients</span><span class="o">:</span><span class="w">
+                      </span><span class="n">Estimate</span><span class="w"> </span><span class="n">Std.</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">Pr</span><span class="p">(</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span><span class="p">)</span><span class="w">    
+</span><span class="p">(</span><span class="n">Intercept</span><span class="p">)</span><span class="w">           </span><span class="m">0.003155</span><span class="w">   </span><span class="m">0.027098</span><span class="w">   </span><span class="m">0.116</span><span class="w">    </span><span class="m">0.907</span><span class="w">    
+</span><span class="n">media_consumption_x</span><span class="w">  </span><span class="m">-0.437084</span><span class="w">   </span><span class="m">0.039102</span><span class="w"> </span><span class="m">-11.178</span><span class="w">   </span><span class="o">&lt;</span><span class="m">2e-16</span><span class="w"> </span><span class="o">***</span><span class="w">
+</span><span class="n">political_interest_w</span><span class="w">  </span><span class="m">0.444571</span><span class="w">   </span><span class="m">0.021928</span><span class="w">  </span><span class="m">20.274</span><span class="w">   </span><span class="o">&lt;</span><span class="m">2e-16</span><span class="w"> </span><span class="o">***</span><span class="w">
+</span><span class="o">---</span><span class="w">
+</span><span class="n">Signif.</span><span class="w"> </span><span class="n">codes</span><span class="o">:</span><span class="w">  </span><span class="m">0</span><span class="w"> </span><span class="err">‘</span><span class="o">***</span><span class="err">’</span><span class="w"> </span><span class="m">0.001</span><span class="w"> </span><span class="err">‘</span><span class="o">**</span><span class="err">’</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="err">‘</span><span class="o">*</span><span class="err">’</span><span class="w"> </span><span class="m">0.05</span><span class="w"> </span><span class="err">‘</span><span class="n">.</span><span class="err">’</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="err">‘</span><span class="w"> </span><span class="err">’</span><span class="w"> </span><span class="m">1</span><span class="w">
+
+</span><span class="n">Residual</span><span class="w"> </span><span class="n">standard</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="m">0.854</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">997</span><span class="w"> </span><span class="n">degrees</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">freedom</span><span class="w">
+</span><span class="n">Multiple</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.3007</span><span class="p">,</span><span class="w">	</span><span class="n">Adjusted</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.2993</span><span class="w"> 
+</span><span class="nb">F</span><span class="o">-</span><span class="n">statistic</span><span class="o">:</span><span class="w"> </span><span class="m">214.3</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="m">997</span><span class="w"> </span><span class="n">DF</span><span class="p">,</span><span class="w">  </span><span class="n">p</span><span class="o">-</span><span class="n">value</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">2.2e-16</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>Simpson’s paradox</strong></p>
+
+<p>Simpson’s paradox often occurs in social science (and medicine, too) when you pool data instead of conditioning it on group membership (i.e., adding it as a factor in your regression model).</p>
+
+<p>Suppose that, all other things being equal, consuming media causes a slight shift in policy preferences toward the left. But, on average, Republicans consume more news than non-Republicans. And we know that generally Republicans have much more right-leaning preferences.</p>
+
+<p>If we just measure media consumption and policy preferences without including Republicans in the model, we’ll actually estimate that the effect goes in the direction <em>opposite</em> of the true causal effect.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+</pre></td><td class="rouge-code"><pre><span class="n">N</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">
+
+</span><span class="c1"># Let's say that 40% of people in this population are Republicans</span><span class="w">
+</span><span class="n">republican</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rbinom</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">.4</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># And they consume more media</span><span class="w">
+</span><span class="n">media_consumption</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">.75</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">republican</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Consuming more media causes a slight leftward shift in policy</span><span class="w">
+</span><span class="c1"># preferences, and Republicans have more right-leaning preferences</span><span class="w">
+</span><span class="n">policy_prefs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">-.2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">media_consumption</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">republican</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># for easier plotting later</span><span class="w">
+</span><span class="n">df</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">media_consumption</span><span class="p">,</span><span class="w"> </span><span class="n">policy_prefs</span><span class="p">,</span><span class="w"> </span><span class="n">republican</span><span class="p">)</span><span class="w">
+</span><span class="n">df</span><span class="o">$</span><span class="n">republican</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">factor</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s2">"non-republican"</span><span class="p">,</span><span class="w"> </span><span class="s2">"republican"</span><span class="p">)[</span><span class="n">df</span><span class="o">$</span><span class="n">republican</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="p">])</span><span class="w">
+
+</span><span class="c1"># If we don't condition on being Republican, we'll actually estimate</span><span class="w">
+</span><span class="c1"># that the effect goes in the *opposite* direction</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">lm</span><span class="p">(</span><span class="n">policy_prefs</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">media_consumption</span><span class="p">))</span><span class="w">
+
+
+</span><span class="n">Call</span><span class="o">:</span><span class="w">
+</span><span class="n">lm</span><span class="p">(</span><span class="n">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">policy_prefs</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">media_consumption</span><span class="p">)</span><span class="w">
+
+</span><span class="n">Residuals</span><span class="o">:</span><span class="w">
+    </span><span class="n">Min</span><span class="w">      </span><span class="m">1</span><span class="n">Q</span><span class="w">  </span><span class="n">Median</span><span class="w">      </span><span class="m">3</span><span class="n">Q</span><span class="w">     </span><span class="n">Max</span><span class="w"> 
+</span><span class="m">-3.6108</span><span class="w"> </span><span class="m">-0.9559</span><span class="w"> </span><span class="m">-0.0198</span><span class="w">  </span><span class="m">0.9257</span><span class="w">  </span><span class="m">3.9537</span><span class="w"> 
+
+</span><span class="n">Coefficients</span><span class="o">:</span><span class="w">
+                  </span><span class="n">Estimate</span><span class="w"> </span><span class="n">Std.</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">Pr</span><span class="p">(</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span><span class="p">)</span><span class="w">    
+</span><span class="p">(</span><span class="n">Intercept</span><span class="p">)</span><span class="w">        </span><span class="m">0.68923</span><span class="w">    </span><span class="m">0.04323</span><span class="w">   </span><span class="m">15.94</span><span class="w">  </span><span class="o">&lt;</span><span class="w"> </span><span class="m">2e-16</span><span class="w"> </span><span class="o">***</span><span class="w">
+</span><span class="n">media_consumption</span><span class="w">  </span><span class="m">0.15269</span><span class="w">    </span><span class="m">0.03966</span><span class="w">    </span><span class="m">3.85</span><span class="w"> </span><span class="m">0.000126</span><span class="w"> </span><span class="o">***</span><span class="w">
+</span><span class="o">---</span><span class="w">
+</span><span class="n">Signif.</span><span class="w"> </span><span class="n">codes</span><span class="o">:</span><span class="w">  </span><span class="m">0</span><span class="w"> </span><span class="err">‘</span><span class="o">***</span><span class="err">’</span><span class="w"> </span><span class="m">0.001</span><span class="w"> </span><span class="err">‘</span><span class="o">**</span><span class="err">’</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="err">‘</span><span class="o">*</span><span class="err">’</span><span class="w"> </span><span class="m">0.05</span><span class="w"> </span><span class="err">‘</span><span class="n">.</span><span class="err">’</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="err">‘</span><span class="w"> </span><span class="err">’</span><span class="w"> </span><span class="m">1</span><span class="w">
+
+</span><span class="n">Residual</span><span class="w"> </span><span class="n">standard</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="m">1.317</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">998</span><span class="w"> </span><span class="n">degrees</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">freedom</span><span class="w">
+</span><span class="n">Multiple</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.01463</span><span class="p">,</span><span class="w">	</span><span class="n">Adjusted</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.01365</span><span class="w"> 
+</span><span class="nb">F</span><span class="o">-</span><span class="n">statistic</span><span class="o">:</span><span class="w"> </span><span class="m">14.82</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="m">998</span><span class="w"> </span><span class="n">DF</span><span class="p">,</span><span class="w">  </span><span class="n">p</span><span class="o">-</span><span class="n">value</span><span class="o">:</span><span class="w"> </span><span class="m">0.0001257</span><span class="w">
+
+</span><span class="c1"># Naive plot</span><span class="w">
+</span><span class="n">qplot</span><span class="p">(</span><span class="n">media_consumption</span><span class="p">,</span><span class="w"> </span><span class="n">policy_prefs</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'lm'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Naive estimate (Simpson's Paradox)"</span><span class="p">)</span><span class="w"> 
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The estimate goes in the opposite direction of the true effect! Here’s what the plot looks like:</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*2gxiWJN7ElkYAO-wuvakzA.png" alt="" /></p>
+
+<p>To resolve this paradox, we need to add a factor in the model that indicates whether or not a respondent is a Republican. Adding that factor lets us estimate <em>separate</em> slopes for Republicans and non-Republicans. Note that this is <em>not</em> like estimating an interaction term, where two explanatory variables are multiplied together. It’s not that the slopes are <em>different</em>, we just need to estimate separate ones for Republicans and non-Republicans.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre></td><td class="rouge-code"><pre><span class="c1"># Condition on being a Republican to get the right estimates</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">lm</span><span class="p">(</span><span class="n">policy_prefs</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">media_consumption</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">republican</span><span class="p">))</span><span class="w">
+
+</span><span class="n">Call</span><span class="o">:</span><span class="w">
+</span><span class="n">lm</span><span class="p">(</span><span class="n">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">policy_prefs</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">media_consumption</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">republican</span><span class="p">)</span><span class="w">
+
+</span><span class="n">Residuals</span><span class="o">:</span><span class="w">
+    </span><span class="n">Min</span><span class="w">      </span><span class="m">1</span><span class="n">Q</span><span class="w">  </span><span class="n">Median</span><span class="w">      </span><span class="m">3</span><span class="n">Q</span><span class="w">     </span><span class="n">Max</span><span class="w"> 
+</span><span class="m">-3.5518</span><span class="w"> </span><span class="m">-0.6678</span><span class="w"> </span><span class="m">-0.0186</span><span class="w">  </span><span class="m">0.6562</span><span class="w">  </span><span class="m">3.3009</span><span class="w"> 
+
+</span><span class="n">Coefficients</span><span class="o">:</span><span class="w">
+                  </span><span class="n">Estimate</span><span class="w"> </span><span class="n">Std.</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">Pr</span><span class="p">(</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span><span class="p">)</span><span class="w">    
+</span><span class="p">(</span><span class="n">Intercept</span><span class="p">)</span><span class="w">        </span><span class="m">0.05335</span><span class="w">    </span><span class="m">0.03904</span><span class="w">   </span><span class="m">1.366</span><span class="w">    </span><span class="m">0.172</span><span class="w">    
+</span><span class="n">media_consumption</span><span class="w"> </span><span class="m">-0.13615</span><span class="w">    </span><span class="m">0.03111</span><span class="w">  </span><span class="m">-4.376</span><span class="w"> </span><span class="m">1.34e-05</span><span class="w"> </span><span class="o">***</span><span class="w">
+</span><span class="n">republican</span><span class="w">         </span><span class="m">1.93049</span><span class="w">    </span><span class="m">0.06758</span><span class="w">  </span><span class="m">28.565</span><span class="w">  </span><span class="o">&lt;</span><span class="w"> </span><span class="m">2e-16</span><span class="w"> </span><span class="o">***</span><span class="w">
+</span><span class="o">---</span><span class="w">
+</span><span class="n">Signif.</span><span class="w"> </span><span class="n">codes</span><span class="o">:</span><span class="w">  </span><span class="m">0</span><span class="w"> </span><span class="err">‘</span><span class="o">***</span><span class="err">’</span><span class="w"> </span><span class="m">0.001</span><span class="w"> </span><span class="err">‘</span><span class="o">**</span><span class="err">’</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="err">‘</span><span class="o">*</span><span class="err">’</span><span class="w"> </span><span class="m">0.05</span><span class="w"> </span><span class="err">‘</span><span class="n">.</span><span class="err">’</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="err">‘</span><span class="w"> </span><span class="err">’</span><span class="w"> </span><span class="m">1</span><span class="w">
+
+</span><span class="n">Residual</span><span class="w"> </span><span class="n">standard</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="m">0.9774</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">997</span><span class="w"> </span><span class="n">degrees</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">freedom</span><span class="w">
+</span><span class="n">Multiple</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.4581</span><span class="p">,</span><span class="w">	</span><span class="n">Adjusted</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.457</span><span class="w"> 
+</span><span class="nb">F</span><span class="o">-</span><span class="n">statistic</span><span class="o">:</span><span class="w"> </span><span class="m">421.4</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="m">997</span><span class="w"> </span><span class="n">DF</span><span class="p">,</span><span class="w">  </span><span class="n">p</span><span class="o">-</span><span class="n">value</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">2.2e-16</span><span class="w">
+
+</span><span class="c1"># Conditioning on being Republican</span><span class="w">
+</span><span class="n">qplot</span><span class="p">(</span><span class="n">media_consumption</span><span class="p">,</span><span class="w"> </span><span class="n">policy_prefs</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">republican</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">scale_color_manual</span><span class="p">(</span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">,</span><span class="s2">"red"</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">geom_smooth</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">'lm'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">ggtitle</span><span class="p">(</span><span class="s2">"Conditioning on being a Republican (Simpson's Paradox)"</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Here’s what the plot looks like:</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*rwNGDFcsSSMiGsJoc6ZxsQ.png" alt="" /></p>
+
+<p><strong>Correlated errors</strong></p>
+
+<p>Another cardinal sin — and one that we should worry a lot about because it often arises from social desirability bias in survey responses — is the phenomenon of correlated errors. This example is inspired by <a href="https://www.nowpublishers.com/article/Details/QJPS-6005">Vavreck (2007).</a></p>
+
+<p>Here, self-reported turnout and media consumption are caused by a combination of social desirability bias and true turnout and true consumption, respectively:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="n">N</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">1000</span><span class="w">
+
+</span><span class="c1"># The "Truth"</span><span class="w">
+</span><span class="n">true_media_consumption</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+</span><span class="n">true_vote</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="m">.1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">media_consumption</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># social desirability bias</span><span class="w">
+</span><span class="n">social_desirability</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="w">
+</span><span class="c1">#what we actually observe from self reports:</span><span class="w">
+</span><span class="n">self_report_media_consumption</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">true_media_consumption</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">social_desirability</span><span class="w">
+</span><span class="n">self_report_vote</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">true_vote</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">social_desirability</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Let’s compare the estimated effect sizes of the self-reported data and the “true” data:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+</pre></td><td class="rouge-code"><pre><span class="c1"># Self reports</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">lm</span><span class="p">(</span><span class="n">self_report_vote</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">self_report_media_consumption</span><span class="p">))</span><span class="w">
+
+</span><span class="n">Call</span><span class="o">:</span><span class="w">
+</span><span class="n">lm</span><span class="p">(</span><span class="n">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self_report_vote</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">self_report_media_consumption</span><span class="p">)</span><span class="w">
+
+</span><span class="n">Residuals</span><span class="o">:</span><span class="w">
+    </span><span class="n">Min</span><span class="w">      </span><span class="m">1</span><span class="n">Q</span><span class="w">  </span><span class="n">Median</span><span class="w">      </span><span class="m">3</span><span class="n">Q</span><span class="w">     </span><span class="n">Max</span><span class="w"> 
+</span><span class="m">-3.9604</span><span class="w"> </span><span class="m">-0.7766</span><span class="w">  </span><span class="m">0.0142</span><span class="w">  </span><span class="m">0.8465</span><span class="w">  </span><span class="m">4.1811</span><span class="w"> 
+
+</span><span class="n">Coefficients</span><span class="o">:</span><span class="w">
+                              </span><span class="n">Estimate</span><span class="w"> </span><span class="n">Std.</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">Pr</span><span class="p">(</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span><span class="p">)</span><span class="w">    
+</span><span class="p">(</span><span class="n">Intercept</span><span class="p">)</span><span class="w">                    </span><span class="m">0.02020</span><span class="w">    </span><span class="m">0.03951</span><span class="w">   </span><span class="m">0.511</span><span class="w">    </span><span class="m">0.609</span><span class="w">    
+</span><span class="n">self_report_media_consumption</span><span class="w">  </span><span class="m">0.54605</span><span class="w">    </span><span class="m">0.02716</span><span class="w">  </span><span class="m">20.102</span><span class="w">   </span><span class="o">&lt;</span><span class="m">2e-16</span><span class="w"> </span><span class="o">***</span><span class="w">
+</span><span class="o">---</span><span class="w">
+</span><span class="n">Signif.</span><span class="w"> </span><span class="n">codes</span><span class="o">:</span><span class="w">  </span><span class="m">0</span><span class="w"> </span><span class="err">‘</span><span class="o">***</span><span class="err">’</span><span class="w"> </span><span class="m">0.001</span><span class="w"> </span><span class="err">‘</span><span class="o">**</span><span class="err">’</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="err">‘</span><span class="o">*</span><span class="err">’</span><span class="w"> </span><span class="m">0.05</span><span class="w"> </span><span class="err">‘</span><span class="n">.</span><span class="err">’</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="err">‘</span><span class="w"> </span><span class="err">’</span><span class="w"> </span><span class="m">1</span><span class="w">
+
+</span><span class="n">Residual</span><span class="w"> </span><span class="n">standard</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="m">1.248</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">998</span><span class="w"> </span><span class="n">degrees</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">freedom</span><span class="w">
+</span><span class="n">Multiple</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.2882</span><span class="p">,</span><span class="w">	</span><span class="n">Adjusted</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.2875</span><span class="w"> 
+</span><span class="nb">F</span><span class="o">-</span><span class="n">statistic</span><span class="o">:</span><span class="w"> </span><span class="m">404.1</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="m">998</span><span class="w"> </span><span class="n">DF</span><span class="p">,</span><span class="w">  </span><span class="n">p</span><span class="o">-</span><span class="n">value</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">2.2e-16</span><span class="w">
+
+</span><span class="c1"># "Truth"</span><span class="w">
+</span><span class="n">summary</span><span class="p">(</span><span class="n">lm</span><span class="p">(</span><span class="n">true_vote</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">true_media_consumption</span><span class="p">))</span><span class="w">
+
+</span><span class="n">Call</span><span class="o">:</span><span class="w">
+</span><span class="n">lm</span><span class="p">(</span><span class="n">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">true_vote</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">true_media_consumption</span><span class="p">)</span><span class="w">
+
+</span><span class="n">Residuals</span><span class="o">:</span><span class="w">
+    </span><span class="n">Min</span><span class="w">      </span><span class="m">1</span><span class="n">Q</span><span class="w">  </span><span class="n">Median</span><span class="w">      </span><span class="m">3</span><span class="n">Q</span><span class="w">     </span><span class="n">Max</span><span class="w"> 
+</span><span class="m">-3.5814</span><span class="w"> </span><span class="m">-0.6677</span><span class="w"> </span><span class="m">-0.0077</span><span class="w">  </span><span class="m">0.6829</span><span class="w">  </span><span class="m">3.4799</span><span class="w"> 
+
+</span><span class="n">Coefficients</span><span class="o">:</span><span class="w">
+                       </span><span class="n">Estimate</span><span class="w"> </span><span class="n">Std.</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">Pr</span><span class="p">(</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="n">Intercept</span><span class="p">)</span><span class="w">             </span><span class="m">0.01372</span><span class="w">    </span><span class="m">0.03217</span><span class="w">   </span><span class="m">0.426</span><span class="w">    </span><span class="m">0.670</span><span class="w">
+</span><span class="n">true_media_consumption</span><span class="w">  </span><span class="m">0.01313</span><span class="w">    </span><span class="m">0.03245</span><span class="w">   </span><span class="m">0.404</span><span class="w">    </span><span class="m">0.686</span><span class="w">
+
+</span><span class="n">Residual</span><span class="w"> </span><span class="n">standard</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="m">1.017</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">998</span><span class="w"> </span><span class="n">degrees</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">freedom</span><span class="w">
+</span><span class="n">Multiple</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.0001639</span><span class="p">,</span><span class="w">	</span><span class="n">Adjusted</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">-0.000838</span><span class="w"> 
+</span><span class="nb">F</span><span class="o">-</span><span class="n">statistic</span><span class="o">:</span><span class="w"> </span><span class="m">0.1636</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="m">998</span><span class="w"> </span><span class="n">DF</span><span class="p">,</span><span class="w">  </span><span class="n">p</span><span class="o">-</span><span class="n">value</span><span class="o">:</span><span class="w"> </span><span class="m">0.686</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The self-reported data is biased toward over-estimating the effect size, a very dangerous problem. How could we fix this? Well, one way is to actually measure social desirability and include it in the model:</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="rouge-code"><pre><span class="n">summary</span><span class="p">(</span><span class="n">lm</span><span class="p">(</span><span class="n">self_report_vote</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">self_report_media_consumption</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">social_desirability</span><span class="p">))</span><span class="w">
+
+</span><span class="n">Call</span><span class="o">:</span><span class="w">
+</span><span class="n">lm</span><span class="p">(</span><span class="n">formula</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">self_report_vote</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">self_report_media_consumption</span><span class="w"> </span><span class="o">+</span><span class="w"> 
+    </span><span class="n">social_desirability</span><span class="p">)</span><span class="w">
+
+</span><span class="n">Residuals</span><span class="o">:</span><span class="w">
+    </span><span class="n">Min</span><span class="w">      </span><span class="m">1</span><span class="n">Q</span><span class="w">  </span><span class="n">Median</span><span class="w">      </span><span class="m">3</span><span class="n">Q</span><span class="w">     </span><span class="n">Max</span><span class="w"> 
+</span><span class="m">-3.6042</span><span class="w"> </span><span class="m">-0.6774</span><span class="w"> </span><span class="m">-0.0127</span><span class="w">  </span><span class="m">0.6899</span><span class="w">  </span><span class="m">3.4470</span><span class="w"> 
+
+</span><span class="n">Coefficients</span><span class="o">:</span><span class="w">
+                              </span><span class="n">Estimate</span><span class="w"> </span><span class="n">Std.</span><span class="w"> </span><span class="n">Error</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="n">Pr</span><span class="p">(</span><span class="o">&gt;|</span><span class="n">t</span><span class="o">|</span><span class="p">)</span><span class="w">    
+</span><span class="p">(</span><span class="n">Intercept</span><span class="p">)</span><span class="w">                    </span><span class="m">0.01208</span><span class="w">    </span><span class="m">0.03220</span><span class="w">   </span><span class="m">0.375</span><span class="w">    </span><span class="m">0.708</span><span class="w">    
+</span><span class="n">self_report_media_consumption</span><span class="w">  </span><span class="m">0.01220</span><span class="w">    </span><span class="m">0.03246</span><span class="w">   </span><span class="m">0.376</span><span class="w">    </span><span class="m">0.707</span><span class="w">    
+</span><span class="n">social_desirability</span><span class="w">            </span><span class="m">1.02245</span><span class="w">    </span><span class="m">0.04547</span><span class="w">  </span><span class="m">22.487</span><span class="w">   </span><span class="o">&lt;</span><span class="m">2e-16</span><span class="w"> </span><span class="o">***</span><span class="w">
+</span><span class="o">---</span><span class="w">
+</span><span class="n">Signif.</span><span class="w"> </span><span class="n">codes</span><span class="o">:</span><span class="w">  </span><span class="m">0</span><span class="w"> </span><span class="err">‘</span><span class="o">***</span><span class="err">’</span><span class="w"> </span><span class="m">0.001</span><span class="w"> </span><span class="err">‘</span><span class="o">**</span><span class="err">’</span><span class="w"> </span><span class="m">0.01</span><span class="w"> </span><span class="err">‘</span><span class="o">*</span><span class="err">’</span><span class="w"> </span><span class="m">0.05</span><span class="w"> </span><span class="err">‘</span><span class="n">.</span><span class="err">’</span><span class="w"> </span><span class="m">0.1</span><span class="w"> </span><span class="err">‘</span><span class="w"> </span><span class="err">’</span><span class="w"> </span><span class="m">1</span><span class="w">
+
+</span><span class="n">Residual</span><span class="w"> </span><span class="n">standard</span><span class="w"> </span><span class="n">error</span><span class="o">:</span><span class="w"> </span><span class="m">1.017</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">997</span><span class="w"> </span><span class="n">degrees</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">freedom</span><span class="w">
+</span><span class="n">Multiple</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.5277</span><span class="p">,</span><span class="w">	</span><span class="n">Adjusted</span><span class="w"> </span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="o">:</span><span class="w">  </span><span class="m">0.5268</span><span class="w"> 
+</span><span class="nb">F</span><span class="o">-</span><span class="n">statistic</span><span class="o">:</span><span class="w">   </span><span class="m">557</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="m">997</span><span class="w"> </span><span class="n">DF</span><span class="p">,</span><span class="w">  </span><span class="n">p</span><span class="o">-</span><span class="n">value</span><span class="o">:</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">2.2e-16</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Note that this while most people think about social desirability as being a problem related to measurement error, it is essentially the same problem as omitted variable bias, as described above.</p>
+
+<p>It’s important to remember that omitted variable bias and correlated errors are just two potential problems with regression analysis. Regression models are also not immune to issues associated with low levels of <a href="https://en.wikipedia.org/wiki/Power_%28statistics%29">statistical power</a>, the failure to account for the influence of extreme values, and <a href="https://en.wikipedia.org/wiki/Heteroscedasticity">heteroskedasticity</a>, among others. But by simulating the data-generating process, researchers can get a good sense of some of the more common ways in which statistical models might depart from reality.</p>
+
+  </article>
+
+<!-- 
+  
+ -->
+
+
+
+ 
+
+
+
+</div>
+
+      </div>
+    </div>
+
+    <footer>
+
+  <div class="wrapper">
+    &copy; Copyright 2020 Solomon Messing.
+    
+    
+  </div>
+
+</footer>
+
+
+    <!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"></script>
+<script src="/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css">
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-27273977-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+
+</html>

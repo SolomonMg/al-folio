@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html>
+
+  <!-- Mathjax Support -->
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Solomon Messing | Know your data - Pricing diamonds using scatterplots and predictive models</title>
+  <meta name="description" content="Research Scientist. Manager of data science for Social Science One at  Facebook, former (founding) Director at Pew Research Center’s Data Labs.
+">
+
+  <link rel="shortcut icon" href="/assets/img/favicon.ico">
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="canonical" href="/blog/2018/visualization-series-scatterplot-understanding-the-diamond-market/">
+</head>
+
+
+  <body>
+
+    <header class="site-header">
+
+  <div class="wrapper">
+
+    <span class="site-title">
+        
+        <strong>Solomon Messing</strong>
+    </span>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+      <div class="trigger">
+        
+        <!-- CV -->
+        <a class="page-link" href="/assets/pdf/CV.pdf">CV</a>
+
+        <!-- About -->
+        
+          <a class="page-link" href="/">about</a>
+        
+
+        <!-- Blog -->
+        
+          <a class="page-link" href="/blog/">blog</a>
+        
+
+
+        <!-- Pages -->
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            
+              <a class="page-link" href="/projects/">projects</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/publications/">publications</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/teaching/">teaching</a>
+            
+          
+        
+          
+            
+              <a class="page-link" href="/techsetup/">tech stack</a>
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+    <!--     
+          
+            <li><a href="/cv"></a></li>
+          
+        
+          
+            <li><a href="/"></a></li>
+          
+        
+          
+            <li><a href="/blog/"></a></li>
+          
+        
+          
+            <li><a href="/assets/css/main.css"></a></li>
+          
+        
+          
+            <li><a href="/projects/">projects</a></li>
+          
+        
+          
+            <li><a href="/publications/">publications</a></li>
+          
+        
+          
+            <li><a href="/teaching/">teaching</a></li>
+          
+        
+          
+            <li><a href="/techsetup/">tech stack</a></li>
+          
+        
+          
+            <li><a href="/assets/css/style.css"></a></li>
+          
+        
+          
+            <li><a href="/assets/pdf/cv/"></a></li>
+          
+        
+          
+            <li><a href="/2012/03/04/visualization-series-insight-from-cleveland-and-tufte-on-plotting-numeric-data-by-groups/"></a></li>
+          
+        
+          
+            <li><a href="/2012/09/30/working-with-bipartiteaffiliation-network-data-in-r/"></a></li>
+          
+        
+          
+            <li><a href="/2014/10/11/when-to-use-stacked-barcharts/"></a></li>
+          
+        
+          
+            <li><a href="/2015/05/24/exposure-to-ideologically-diverse-news-and-opinion-future-research/"></a></li>
+          
+        
+          
+            <li><a href="/2017/10/16/replication-of-study-2-in-bias-in-the-flesh-skin-complexion-and-stereotype-consistency-in-political-campaigns/"></a></li>
+          
+        
+          
+            <li><a href="/blog/2014/visualization-series-the-scatterplot-and-understanding-the-diamond-market/"></a></li>
+          
+        
+          
+            <li><a href="/2018/02/16/response-to-fivethirtyeights-podcast-about-our-paper-projecting-confidence/"></a></li>
+          
+        
+          
+            <li><a href="/research/"></a></li>
+          
+        
+          
+            <li><a href="/redirects.json"></a></li>
+          
+         -->
+
+
+        <!-- CV link -->
+        <!-- <a class="page-link" href="/assets/pdf/CV.pdf">vitae</a> -->
+
+      </div>
+    </nav>
+
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        <div class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Know your data - Pricing diamonds using scatterplots and predictive models</h1>
+    <p class="post-meta">January 10, 2018</p>
+  </header>
+
+  <article class="post-content">
+    <p><img src="/assets/img/fbfa61f67413c8e2805c507a14b38c24c5373265.png" alt="ggpairs" /></p>
+
+<p>My last post railed against the <a href="https://solomonmg.github.io/blog/2012/visualization-series-insight-from-cleveland-and-tufte-on-plotting-numeric-data-by-groups/">bad visualizations that people often use to plot quantitive data by groups, and pitted pie charts, bar charts and dot plots against each other for two visualization tasks.  Dot plots came out on top</a>.  I argued that this is because humans are good at the cognitive task of comparing position along a common scale, compared to making judgements about length, area, shading, direction, angle, volume, curvature, etc.—a finding credited to Cleveland and McGill.  I enjoyed writing it and people seemed to like it, so I’m continuing my visualization series with the scatterplot.</p>
+
+<h2 id="scatterplots">Scatterplots</h2>
+
+<p>A scatterplot is a two-dimensional plane on which we record the intersection of two measurements for a set of case items–usually two quantitative variables.  Just as humans are good at comparing position along a common scale in one dimension, our visual capabilities allow us to make fast, accurate judgements and recognize patterns when presented with a series of dots in two dimensions. This makes the scatterplot a valuable tool for data analysts both when exploring data and when communicating results to others.</p>
+
+<p>In this post—part 1—I’ll demonstrate various uses for scatterplots and outline some strategies to help make sure key patterns are not obscured by the scale or qualitative group-level differences in the data (e.g., the relationship between test scores and income differs for men and women). The motivation in this post is to come up with a model of diamond prices that you can use to help make sure you don’t get ripped off, specified based on insight from exploratory scatterplots combined with (somewhat) informed speculation. In part 2, I’ll discuss the use of panels aka facets aka small multiples to shed additional light on key patterns in the data, and local regression (loess) to examine central tendencies in the data. There are far fewer bad examples of this kind of visualization in the wild than the 3D barplots and pie charts mocked in my last post, though I was still able to find <a href="http://www.showmethemath.com/Concepts_Explained/Scatter_Plot/homeworkScatterPlotAnswer.gif">this lovely scatterplot + trend-line</a>.</p>
+
+<p><img src="/assets/img/0e5cd98eb90fbc27e55e776f3303057ef7a35dcb.gif" alt="" /></p>
+
+<h2 id="scatterplots-and-the-cartesian-coordinate-system">Scatterplots and the Cartesian coordinate system</h2>
+
+<p>The scatterplot has a richer history than the visualizations I wrote about in my last post.  The scatterplot’s face forms a two-dimensional Cartesian coordinate system, and DeCartes’ invention/discovery of this eponymous plane in around 1657 represents one of the most fundamental developments in science.  The Cartesian plane unites measurement, algebra, and geometry, depicting the relationship between variables (or functions) visually. Prior to the Cartesian plane, mathematics was divided into algebra and geometry, and the unification of the two made many new developments possible.  Of course, this includes modern map-making—cartography, but the <a href="http://en.wikipedia.org/wiki/Cartesian_coordinate_system#History">Cartesian plane was also an important step in the development of calculus</a>, without which very little of our modern would would be possible.</p>
+
+<p>The scatterplot is a powerful tool to help understand the relationship between variables, and especially if that relationship is non-linear. Say you want to get a sense of whether you’re paying the right price when shopping for a diamond. You can use data on the price and characteristics of many diamonds to help figure out whether the price advertised for any given diamond is reasonable, and you can use scatterplots to help figure out how to model that data in a sensible way. Consider the important relationship between the price of a diamond and its carat weight (which corresponds to its size):</p>
+
+<p><img src="/assets/img/635214c79e184de850272a4790deed0dc870a49a.png" alt="caratprice" /></p>
+
+<p>A few things pop out right away.  We can see a non-linear relationship, and we can also see that the dispersion (variance) of the relationship also increases as carat size increases. With just a quick look at a scatterplot of the data, we’ve learned two important things about the functional relationship between price and carat size. And, we also therefore learned that running a linear model on this data as-is would be a bad idea.</p>
+
+<h2 id="diamonds">Diamonds</h2>
+<p><a name="Diamonds"></a></p>
+
+<p>If you’ve ever used R, you’ve probably seen references to the diamonds data set that ships with Hadley Wickham’s ggplot2. It records the carat size and the price of more than 50 thousand diamonds, from http://www.diamondse.info/ collected in <a href="http://r.789695.n4.nabble.com/Year-of-data-collection-for-diamonds-dataset-in-ggplot2-td4506598.html">in 2008</a>, and if you’re in the market for a diamond, exploring this data set can help you understand what’s in store and at what price point. This is particularly useful because each diamond is unique in a way that isn’t true of most manufactured products we are used to buying—you can’t just plug a model number and look up the price on Amazon. And even an expert cannot cannot incorporate as much information about price as a picture of the entire market informed by data (though there’s no substitute for qualitative expertise to make sure your diamond is what the retailer claims).</p>
+
+<p>But even if you’re not looking to buy a diamond, the socioeconomic and political history of the diamond industry is fascinating. Diamonds birthed the mining industry in South Africa, which is now by far the largest and most advanced economy in Africa.  I worked a summer in Johannesburg, and can assure you that South Africa’s cities look far more like L.A. and San Francisco than Lagos, Cairo, Mogadishu, Nairobi, or Rabat.  Diamonds drove the British and Dutch to colonize southern Africa in the first place, and have stoked conflicts ranging from the Boer Wars to modern day wars in Sierra Leone, Liberia, Côte d’Ivoire, Zimbabwe and the DRC, where the 200 carat Millennium Star diamond was sold to DeBeers at the height of the civil war in the 1990s.  Diamonds were one of the few assets that Jews could conceal from the Nazis during <a href="http://www.archives.gov/research/holocaust/articles-and-papers/turning-history-into-justice.html">the “Aryanization of Jewish property”</a> in the 1930s, and the Congressional Research Service reports that <a href="http://royce.house.gov/uploadedfiles/rl30751.pdf">Al Qaeda has used conflict diamonds to skirt international sanctions and finance operations from the 1998 East Africa Bombings to the September 11th attacks</a>.</p>
+
+<p><img src="/assets/img/c7c2fd41f3cf8c8b7423ab84c12dfbd14fed71ca.jpg" alt="" /></p>
+
+<p>Though the diamonds data set is full of prices and fairly esoteric certification ratings, hidden in the data are reflections of how a <a href="http://www.nytimes.com/2013/05/05/fashion/weddings/how-americans-learned-to-love-diamonds.html">legendary marketing campaign permeated and was subsumed by our culture</a>, hints about how different social strata responded, and insight into how the diamond market functions as a result.</p>
+
+<p><a href="http://www.theatlantic.com/magazine/archive/1982/02/have-you-ever-tried-to-sell-a-diamond/304575/">The story starts in 1870</a> according to The Atlantic, when many tons of diamonds were discovered in South Africa near the Orange River.  Until then, diamonds were rare—only a few pounds were mined from India and Brazil each year.  At the time diamonds had no use outside of jewelry as they do today in many industrial applications, so price depended only on scarce supply.  Hence, the project’s investors formed the De Beers Cartel in 1888 to control the global price—by most accounts the most successful cartel in history, <a href="http://en.wikipedia.org/wiki/De_Beers#Diamond_monopoly">controlling 90% of the world’s diamond supply until about 2000</a>.  But World War I and the Great Depression saw diamond sales plummet.</p>
+
+<p><img src="/assets/img/0346d018cd97813448c1ce59a20353ed7c900013.jpg" alt="" /></p>
+
+<p>In 1938, according to the New York Times’ account, the De Beers cartel wrote Philadelphia ad agency N. W. Ayer &amp; Son, to investigate whether “the use of propaganda in various forms” might jump-start diamond sales in the U.S., which looked like the only potentially viable market at the time.  Surveys showed diamonds were low on the list of priorities among most couples contemplating marriage—a luxury for the rich, “money down the drain.”  Frances Gerety, who the Times compares to Madmen’s Peggy Olson, took on the DeBeers’ account at N.W. Ayer &amp; Son, and worked toward the company’s goal “to create a situation where almost every person pledging marriage feels compelled to acquire a diamond engagement ring.”  A few years later, she coined the slogan, “Diamonds are forever.”</p>
+
+<p><img src="/assets/img/90a8efdb27b9c59fbf6566591c14165beab4bfd6.jpg" alt="" /></p>
+
+<p>The Atlantic’s Jay Epstein argues that this campaign gave birth to modern demand-advertising—the objective was not direct sales, nor brand strengthening, but simply to impress the glamour, sentiment and emotional charge contained in the product itself.  The company gave diamonds to movie stars, sent out press packages emphasizing the size of diamonds celebrities gave each other, loaned diamonds to socialites attending prominent events like the Academy Awards and Kentucky Derby, and persuaded the British royal family to wear diamonds over other gems.  The diamond was also marketed as a status symbol, to reflect ”a man’s … success in life,” in ads with “the aroma of tweed, old leather and polished wood which is characteristic of a good club.”  A 1980s ad introduced the two-month benchmark: “Isn’t two months’ salary a small price to pay for something that lasts forever?”</p>
+
+<p><img src="/assets/img/4f1b0bd62c2ab1b46e453b707d2981d84879d4ed.png" alt="" /></p>
+
+<p>By any reasonable measure, Frances Gerety succeeded—getting engaged means getting a diamond ring in America. Can you think of a movie where two people get engaged without a diamond ring? When you announce your engagement on Facebook, what icon does the site display?  Still think this marketing campaign might not be the most successful mass-persuasion effort in history?  I present to you a James Bond film, whose title bears the diamond cartel’s trademark:</p>
+
+<p><img src="/assets/img/f4eda42fe398a38837e01e97e4d07606a20171fe.jpg" alt="" /></p>
+
+<p>Awe-inspiring and terrifying.  Let’s open the data set.  </p>
+
+<p>The first thing you should consider doing is plotting key variables against each other using the ggpairs() function.  This function plots every variable against every other, pairwise.  For a data set with as many rows as the diamonds data, you may want to sample first otherwise things will take a long time to render.  Also, if your data set has more than about ten columns, there will be too many plotting windows, so subset on columns first.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="c1"># Uncomment these lines and install if necessary:</span><span class="w">
+</span><span class="c1">#install.packages('GGally')</span><span class="w">
+</span><span class="c1">#install.packages('ggplot2')</span><span class="w">
+</span><span class="c1">#install.packages('scales')</span><span class="w">
+</span><span class="c1">#install.packages('memisc')</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">GGally</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">scales</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="p">(</span><span class="n">diamonds</span><span class="p">)</span><span class="w">
+</span><span class="n">diasamp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">diamonds</span><span class="p">[</span><span class="n">sample</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">diamonds</span><span class="o">$</span><span class="n">price</span><span class="p">),</span><span class="w"> </span><span class="m">10000</span><span class="p">),]</span><span class="w">
+</span><span class="n">ggpairs</span><span class="p">(</span><span class="n">diasamp</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">I</span><span class="p">(</span><span class="s1">'.'</span><span class="p">),</span><span class="w"> </span><span class="n">outlier.shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">I</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)))</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<!-- * R style note: I started using the "=" operator over "<-" after reading [John Mount's post on the topic](http://www.win-vector.com/blog/2013/04/prefer-for-assignment-in-r/?utm_source=rss&utm_medium=rss&utm_campaign=prefer-for-assignment-in-r), which shows how using "<-" (but not "=") incorrectly can result in silent errors.  There are other good reasons: 1.) WordPress and R-Bloggers occasionally mangle "<-" thinking it is HTML code in ways unpredictable to me; 2.) "=" is what every other programming language uses; and 3.) (as pointed out by Alex Foss in comments) consider "foo<-3" --- did the author mean to assign foo to 3 or to compare foo to -3?  Plus, 4.) the way R interprets that expression depends on white space---and if I'm using an editor like Emacs or Sublime where I don't have a shortcut key assigned to "<-", I sometimes get the whitespace wrong.  This means spending extra time and brainpower on debugging, both of which are in short supply.  
+ -->
+<p>Anyway, here’s the plot:</p>
+
+<p><img src="/assets/img/5226c40443deaf7c082cd464531f4e27c0f151be.png" alt="ggpairs" /></p>
+
+<p>What’s happening is that ggpairs is plotting each variable against the other in a pretty smart way. In the lower-triangle of plot matrix, it uses grouped histograms for qualitative-qualitative pairs and scatterplots for quantitative-quantitative pairs.  In the upper-triangle, it plots grouped histograms for qualitative-qualitative pairs (using the x-instead of y-variable as the grouping factor), boxplots for qualitative-quantitative pairs, and provides the correlation for quantitative-quantitative pairs.
+What we really care about here is price, so let’s focus on that.  We can see what might be relationships between price and clarity, and color, which we’ll keep in mind for later when we start modeling our data, but the critical factor driving price is the size/weight of a diamond. Yet as we saw above, the relationship between price and diamond size is non-linear. What might explain this pattern?  On the supply side, larger contiguous chunks of diamonds without significant flaws are probably much harder to find than smaller ones.  This may help explain the exponential-looking curve—and I thought I noticed this when I was shopping for a diamond for my soon-to-be wife. Of course, this is related to the fact that the weight of a diamond is a function of volume, and volume is a function of x * y * z, suggesting that we might be especially interested in the cubed-root of carat weight.</p>
+
+<p>On the demand side, customers in the market for a less expensive, smaller diamond are probably more sensitive to price than more well-to-do buyers. Many less-than-one-carat customers would surely never buy a diamond were it not for the social norm of presenting one when proposing.  And, there are <em>fewer</em> consumers who can afford a diamond larger than one carat.  Hence, we shouldn’t expect the market for bigger diamonds to be as competitive as that for smaller ones, so it makes sense that the variance as well as the price would increase with carat size.</p>
+
+<p>Often the distribution of any monetary variable will be highly skewed and vary over orders of magnitude. This can result from path-dependence (e.g., the rich get richer) and/or the multiplicitive processes (e.g., year on year inflation) that produce the ultimate price/dollar amount. Hence, it’s a good idea to look into compressing any such variable by putting it on a log scale (for more take a look at <a href="http://www.r-statistics.com/2013/05/log-transformations-for-skewed-and-wide-distributions-from-practical-data-science-with-r/">this guest post on Tal Galili’s blog</a>).</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">qplot</span><span class="p">(</span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">diamonds</span><span class="p">,</span><span class="w"> </span><span class="n">binwidth</span><span class="o">=</span><span class="m">100</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">ggtitle</span><span class="p">(</span><span class="s1">'Price'</span><span class="p">)</span><span class="w">
+</span><span class="n">p</span><span class="w">
+</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">qplot</span><span class="p">(</span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">diamonds</span><span class="p">,</span><span class="w"> </span><span class="n">binwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.01</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_x_log10</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">ggtitle</span><span class="p">(</span><span class="s1">'Price (log10)'</span><span class="p">)</span><span class="w">
+</span><span class="n">p</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="/assets/img/0cc713fc225f620a8284b05a00900ec51e379221.png" alt="" /></p>
+
+<p><img src="/assets/img/cdd7c96b96c0c2deef8844c214703a2243a3070b.png" alt="" /></p>
+
+<p>Indeed, we can see that the prices for diamonds are heavily skewed, but when put on a log10 scale seem much better behaved (i.e., closer to the bell curve of a normal distribution).  In fact, we can see that the data show some evidence of bimodality on the log10 scale, consistent with our two-class, “rich-buyer, poor-buyer” speculation about the nature of customers for diamonds.
+Let’s re-plot our data, but now let’s put price on a log10 scale:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">qplot</span><span class="p">(</span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="n">log10_trans</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">ggtitle</span><span class="p">(</span><span class="s1">'Price (log10) by Carat'</span><span class="p">)</span><span class="w">
+</span><span class="n">p</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="/assets/img/f7fcbbe09988fd9cddc474aecbbd918c448b7575.png" alt="caratpricelog10" /></p>
+
+<p>Better, though still a little funky—let’s try using use the cube-root of carat as we speculated about above:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="n">cubroot_trans</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">()</span><span class="w"> </span><span class="n">trans_new</span><span class="p">(</span><span class="s1">'cubroot'</span><span class="p">,</span><span class="w"> </span><span class="n">transform</span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="m">3</span><span class="p">),</span><span class="w"> </span><span class="n">inverse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">x</span><span class="o">^</span><span class="m">3</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">qplot</span><span class="p">(</span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">diamonds</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_x_continuous</span><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="n">cubroot_trans</span><span class="p">(),</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.2</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w">
+</span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.2</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="n">log10_trans</span><span class="p">(),</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">350</span><span class="p">,</span><span class="m">15000</span><span class="p">),</span><span class="w">
+</span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">350</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="m">5000</span><span class="p">,</span><span class="w"> </span><span class="m">10000</span><span class="p">,</span><span class="w"> </span><span class="m">15000</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">ggtitle</span><span class="p">(</span><span class="s1">'Price (log10) by Cubed-Root of Carat'</span><span class="p">)</span><span class="w">
+</span><span class="n">p</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="/assets/img/271f4d38318b2eefdbe9c5ca6ed34a467e1dab66.png" alt="" /></p>
+
+<p>Nice, looks like an almost-linear relationship after applying the transformations above to get our variables on a nice scale.</p>
+
+<h2 id="overplotting">Overplotting</h2>
+<hr />
+
+<p>Note that until now I haven’t done anything about overplotting—where multiple points take on the same value, often due to rounding.  Indeed, price is rounded to dollars and carats are rounded to two digits.  Not bad, though when we’ve got this much data we’re going to have some serious overplotting.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">head</span><span class="p">(</span><span class="n">sort</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="n">diamonds</span><span class="o">$</span><span class="n">carat</span><span class="p">),</span><span class="w"> </span><span class="n">decreasing</span><span class="o">=</span><span class="kc">TRUE</span><span class="w"> </span><span class="p">))</span><span class="w">
+</span><span class="n">head</span><span class="p">(</span><span class="n">sort</span><span class="p">(</span><span class="n">table</span><span class="p">(</span><span class="n">diamonds</span><span class="o">$</span><span class="n">price</span><span class="p">),</span><span class="w"> </span><span class="n">decreasing</span><span class="o">=</span><span class="kc">TRUE</span><span class="w"> </span><span class="p">))</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="w"> </span><span class="m">0.3</span><span class="w"> </span><span class="m">0.31</span><span class="w"> </span><span class="m">1.01</span><span class="w">  </span><span class="m">0.7</span><span class="w"> </span><span class="m">0.32</span><span class="w">    </span><span class="m">1</span><span class="w"> 
+</span><span class="m">2604</span><span class="w"> </span><span class="m">2249</span><span class="w"> </span><span class="m">2242</span><span class="w"> </span><span class="m">1981</span><span class="w"> </span><span class="m">1840</span><span class="w"> </span><span class="m">1558</span><span class="w"> 
+
+</span><span class="m">605</span><span class="w"> </span><span class="m">802</span><span class="w"> </span><span class="m">625</span><span class="w"> </span><span class="m">828</span><span class="w"> </span><span class="m">776</span><span class="w"> </span><span class="m">698</span><span class="w"> 
+</span><span class="m">132</span><span class="w"> </span><span class="m">127</span><span class="w"> </span><span class="m">126</span><span class="w"> </span><span class="m">125</span><span class="w"> </span><span class="m">124</span><span class="w"> </span><span class="m">121</span><span class="w"> 
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Often you can deal with this by making your points smaller, using “jittering” to randomly shift points to make multiple points visible, and using transparency, which can be done in ggplot using the “alpha” parameter.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ggplot</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">diamonds</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.75</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="o">=</span><span class="s1">'jitter'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_x_continuous</span><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="n">cubroot_trans</span><span class="p">(),</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.2</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w">
+</span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.2</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="n">log10_trans</span><span class="p">(),</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">350</span><span class="p">,</span><span class="m">15000</span><span class="p">),</span><span class="w">
+</span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">350</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="m">5000</span><span class="p">,</span><span class="w"> </span><span class="m">10000</span><span class="p">,</span><span class="w"> </span><span class="m">15000</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">ggtitle</span><span class="p">(</span><span class="s1">'Price (log10) by Cubed-Root of Carat'</span><span class="p">)</span><span class="w">
+</span><span class="n">p</span><span class="w">
+
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="/assets/img/8f93ee4c395a7382a2893b01d640b65e7006ebe9.png" alt="" /></p>
+
+<p>This gives us a better sense of how dense and sparse our data is at key places.</p>
+
+<h2 id="using-color-to-understand-qualitative-factors">Using Color to Understand Qualitative Factors</h2>
+<hr />
+
+<p>When I was looking around at diamonds, I also noticed that clarity seemed to factor in to price.  Of course, many consumers are looking for a diamond of a certain size, so we shouldn’t expect clarity to be as strong a factor as carat weight. And I must admit that even though my grandparents were jewelers, I initially had a hard time discerning a diamond rated VVS1 from one rated SI2. Surely most people need a loop to tell the difference. And, <a href="http://www.bluenile.com/diamonds/diamond-cut">according to BlueNile, the cut of a diamond has a much more consequential impact on that “fiery” quality that jewelers describe as the quintessential characteristic of a diamond</a>.  On clarity, the website states, “<a href="http://www.bluenile.com/diamonds/diamond-clarity">Many of these imperfections are microscopic, and do not affect a diamond’s beauty in any discernible way</a>.” Yet, clarity seems to explain an awful lot of the remaining variance in price when we visualize it as a color on our plot:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ggplot</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">diamonds</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="n">clarity</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.75</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="o">=</span><span class="s1">'jitter'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_colour_brewer</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'div'</span><span class="p">,</span><span class="w">
+</span><span class="n">guide</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">reverse</span><span class="o">=</span><span class="nb">T</span><span class="p">,</span><span class="w">
+</span><span class="n">override.aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_x_continuous</span><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="n">cubroot_trans</span><span class="p">(),</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.2</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w">
+</span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.2</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="n">log10_trans</span><span class="p">(),</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">350</span><span class="p">,</span><span class="m">15000</span><span class="p">),</span><span class="w">
+</span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">350</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="m">5000</span><span class="p">,</span><span class="w"> </span><span class="m">10000</span><span class="p">,</span><span class="w"> </span><span class="m">15000</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_blank</span><span class="p">())</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">ggtitle</span><span class="p">(</span><span class="s1">'Price (log10) by Cubed-Root of Carat and Color'</span><span class="p">)</span><span class="w">
+</span><span class="n">p</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="/assets/img/8ec0d95374a095c4268c9cfad923354f819bbdfb.png" alt="" /></p>
+
+<hr />
+
+<p>Despite what BlueNile says, we don’t see as much variation on cut (though most diamonds in this data set are ideal cut anyway):</p>
+
+<hr />
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ggplot</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">diamonds</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="n">cut</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.75</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="o">=</span><span class="s1">'jitter'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_colour_brewer</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'div'</span><span class="p">,</span><span class="w">
+</span><span class="n">guide</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">reverse</span><span class="o">=</span><span class="nb">T</span><span class="p">,</span><span class="w">
+</span><span class="n">override.aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_x_continuous</span><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="n">cubroot_trans</span><span class="p">(),</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.2</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w">
+</span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.2</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="n">log10_trans</span><span class="p">(),</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">350</span><span class="p">,</span><span class="m">15000</span><span class="p">),</span><span class="w">
+</span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">350</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="m">5000</span><span class="p">,</span><span class="w"> </span><span class="m">10000</span><span class="p">,</span><span class="w"> </span><span class="m">15000</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_blank</span><span class="p">())</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">ggtitle</span><span class="p">(</span><span class="s1">'Price (log10) by Cube-Root of Carat and Cut'</span><span class="p">)</span><span class="w">
+</span><span class="n">p</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="/assets/img/1ef4c90edca2b6e2014d25f2a901a221f9926f6e.png" alt="" /></p>
+
+<p>Color seems to explain some of the variance in price as well, though <a href="http://www.bluenile.com/diamonds/diamond-color">BlueNile states that all color grades from D-J are basically not noticeable</a>.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ggplot</span><span class="p">(</span><span class="w"> </span><span class="n">data</span><span class="o">=</span><span class="n">diamonds</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">carat</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="o">=</span><span class="n">color</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">geom_point</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.75</span><span class="p">,</span><span class="w"> </span><span class="n">position</span><span class="o">=</span><span class="s1">'jitter'</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_colour_brewer</span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'div'</span><span class="p">,</span><span class="w">
+</span><span class="n">guide</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">guide_legend</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">reverse</span><span class="o">=</span><span class="nb">T</span><span class="p">,</span><span class="w">
+</span><span class="n">override.aes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_x_continuous</span><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="n">cubroot_trans</span><span class="p">(),</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.2</span><span class="p">,</span><span class="m">3</span><span class="p">),</span><span class="w">
+</span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0.2</span><span class="p">,</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">trans</span><span class="o">=</span><span class="n">log10_trans</span><span class="p">(),</span><span class="w"> </span><span class="n">limits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">350</span><span class="p">,</span><span class="m">15000</span><span class="p">),</span><span class="w">
+</span><span class="n">breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">350</span><span class="p">,</span><span class="w"> </span><span class="m">1000</span><span class="p">,</span><span class="w"> </span><span class="m">5000</span><span class="p">,</span><span class="w"> </span><span class="m">10000</span><span class="p">,</span><span class="w"> </span><span class="m">15000</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">theme_bw</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_blank</span><span class="p">())</span><span class="w"> </span><span class="o">+</span><span class="w">
+</span><span class="n">ggtitle</span><span class="p">(</span><span class="s1">'Price (log10) by Cube-Root of Carat and Color'</span><span class="p">)</span><span class="w">
+</span><span class="n">p</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="/assets/img/277ef617f6ebe3749e64a855be635406ea80dba7.png" alt="caratpricecolorlog10" /></p>
+
+<p>At this point, we’ve got a pretty good idea of how we might model price. But there are a few problems with our 2008 data—not only do we need to account for inflation but the diamond market is quite different now than it was in 2008. In fact, when I fit models to this data then attempted to predict the price of diamonds I found on the market, I kept getting predictions that were far too low. After some additional digging, I found the <a href="http://www.bain.com/publications/articles/global-diamond-report-2013.aspx">Global Diamond Report</a>. It turns out that prices plummeted in 2008 due to the global financial crisis, and since then prices (at least for wholesale polished diamond) have grown at a roughly a 6 percent compound annual rate. The <a href="http://diamonds.blogs.com/diamonds_update/diamond-prices/">rapidly-growing number of couples in China buying diamond engagement rings</a> might also help explain this increase. After looking at data on PriceScope, I realized that <a href="http://www.pricescope.com/diamond-prices/diamond-prices-chart">diamond prices grew unevenly across different carat sizes</a>, meaning that the model I initially estimated couldn’t simply be adjusted by inflation. While I could have done ok with that model, I really wanted to estimate a new model based on fresh data.</p>
+
+<p>Thankfully I was able to put together a <a href="https://github.com/solomonm/diamonds-data/blob/master/dinfo.py">python script to scrape diamondse.info</a> without too much trouble. This dataset is about 10 times the size of the 2008 diamonds data set and features diamonds from all over the world certified by an array of authorities besides just the Gemological Institute of America (GIA). You can read in this data as follows (be forewarned—it’s over 500K rows):</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="c1">#install.packages('RCurl')</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="s1">'RCurl'</span><span class="p">)</span><span class="w">
+</span><span class="n">diamondsurl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getBinaryURL</span><span class="p">(</span><span class="s1">'https://raw.github.com/solomonm/diamonds-data/master/BigDiamonds.Rda'</span><span class="p">)</span><span class="w">
+</span><span class="n">load</span><span class="p">(</span><span class="n">rawConnection</span><span class="p">(</span><span class="n">diamondsurl</span><span class="p">))</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>My <a href="https://github.com/solomonm/diamonds-data">github repository has the code necessary to replicate each of the figures above</a>—most look quite similar, though this data set contains much more expensive diamonds than the original. Regardless of whether you’re using the original diamonds data set or the current larger diamonds data set, you can estimate a model based on what we learned from our scatterplots. We’ll regress carat, the cubed-root of carat, clarity, cut and color on log-price. I’m using only GIA-certified diamonds in this model and looking only at diamonds under $10K because these are the type of diamonds sold at most retailers I’ve seen and hence the kind I care most about. By trimming the most expensive diamonds from the dataset, our model will also be less likely to be thrown off by outliers at the high end of price and carat. The new data set has mostly the same columns as the old one, so we can just run the following (if you want to run it on the old data set, just set data=diamonds).</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="rouge-code"><pre><span class="n">diamondsbig</span><span class="o">$</span><span class="n">logprice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">diamondsbig</span><span class="o">$</span><span class="n">price</span><span class="p">)</span><span class="w">
+</span><span class="n">m1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lm</span><span class="p">(</span><span class="n">logprice</span><span class="o">~</span><span class="w"> </span><span class="n">I</span><span class="p">(</span><span class="n">carat</span><span class="o">^</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="m">3</span><span class="p">)),</span><span class="w">
+</span><span class="n">data</span><span class="o">=</span><span class="n">diamondsbig</span><span class="p">[</span><span class="n">diamondsbig</span><span class="o">$</span><span class="n">price</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="m">10000</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">diamondsbig</span><span class="o">$</span><span class="n">cert</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'GIA'</span><span class="p">,])</span><span class="w">
+</span><span class="n">m2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">update</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">carat</span><span class="p">)</span><span class="w">
+</span><span class="n">m3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">update</span><span class="p">(</span><span class="n">m2</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cut</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="n">m4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">update</span><span class="p">(</span><span class="n">m3</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">.</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">clarity</span><span class="p">)</span><span class="w">
+</span><span class="c1">#install.packages('memisc')</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">memisc</span><span class="p">)</span><span class="w">
+</span><span class="n">mtable</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span><span class="w"> </span><span class="n">m2</span><span class="p">,</span><span class="w"> </span><span class="n">m3</span><span class="p">,</span><span class="w"> </span><span class="n">m4</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Here are the results for my recently scraped data set:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+</pre></td><td class="rouge-code"><pre><span class="o">===============================================================</span><span class="w">
+                    </span><span class="n">m1</span><span class="w">          </span><span class="n">m2</span><span class="w">          </span><span class="n">m3</span><span class="w">          </span><span class="n">m4</span><span class="w">     
+</span><span class="o">---------------------------------------------------------------</span><span class="w">
+</span><span class="p">(</span><span class="n">Intercept</span><span class="p">)</span><span class="w">       </span><span class="m">2.671</span><span class="o">***</span><span class="w">    </span><span class="m">1.333</span><span class="o">***</span><span class="w">    </span><span class="m">0.949</span><span class="o">***</span><span class="w">   </span><span class="m">-0.464</span><span class="o">***</span><span class="w"> 
+                 </span><span class="p">(</span><span class="m">0.003</span><span class="p">)</span><span class="w">     </span><span class="p">(</span><span class="m">0.012</span><span class="p">)</span><span class="w">     </span><span class="p">(</span><span class="m">0.012</span><span class="p">)</span><span class="w">     </span><span class="p">(</span><span class="m">0.009</span><span class="p">)</span><span class="w">   
+</span><span class="n">I</span><span class="p">(</span><span class="n">carat</span><span class="o">^</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="m">3</span><span class="p">))</span><span class="w">    </span><span class="m">5.839</span><span class="o">***</span><span class="w">    </span><span class="m">8.243</span><span class="o">***</span><span class="w">    </span><span class="m">8.633</span><span class="o">***</span><span class="w">    </span><span class="m">8.320</span><span class="o">***</span><span class="w"> 
+                 </span><span class="p">(</span><span class="m">0.004</span><span class="p">)</span><span class="w">     </span><span class="p">(</span><span class="m">0.022</span><span class="p">)</span><span class="w">     </span><span class="p">(</span><span class="m">0.021</span><span class="p">)</span><span class="w">     </span><span class="p">(</span><span class="m">0.012</span><span class="p">)</span><span class="w">   
+</span><span class="n">carat</span><span class="w">                        </span><span class="m">-1.061</span><span class="o">***</span><span class="w">   </span><span class="m">-1.223</span><span class="o">***</span><span class="w">   </span><span class="m">-0.763</span><span class="o">***</span><span class="w"> 
+                             </span><span class="p">(</span><span class="m">0.009</span><span class="p">)</span><span class="w">     </span><span class="p">(</span><span class="m">0.009</span><span class="p">)</span><span class="w">     </span><span class="p">(</span><span class="m">0.005</span><span class="p">)</span><span class="w">   
+</span><span class="n">cut</span><span class="o">:</span><span class="w"> </span><span class="n">V.Good</span><span class="w">                               </span><span class="m">0.120</span><span class="o">***</span><span class="w">    </span><span class="m">0.071</span><span class="o">***</span><span class="w"> 
+                                         </span><span class="p">(</span><span class="m">0.002</span><span class="p">)</span><span class="w">     </span><span class="p">(</span><span class="m">0.001</span><span class="p">)</span><span class="w">   
+</span><span class="n">cut</span><span class="o">:</span><span class="w"> </span><span class="n">Ideal</span><span class="w">                                </span><span class="m">0.211</span><span class="o">***</span><span class="w">    </span><span class="m">0.131</span><span class="o">***</span><span class="w"> 
+                                         </span><span class="p">(</span><span class="m">0.002</span><span class="p">)</span><span class="w">     </span><span class="p">(</span><span class="m">0.001</span><span class="p">)</span><span class="w">   
+</span><span class="n">color</span><span class="o">:</span><span class="w"> </span><span class="n">K</span><span class="o">/</span><span class="n">L</span><span class="w">                                            </span><span class="m">0.117</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.003</span><span class="p">)</span><span class="w">   
+</span><span class="n">color</span><span class="o">:</span><span class="w"> </span><span class="n">J</span><span class="o">/</span><span class="n">L</span><span class="w">                                            </span><span class="m">0.318</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.002</span><span class="p">)</span><span class="w">   
+</span><span class="n">color</span><span class="o">:</span><span class="w"> </span><span class="n">I</span><span class="o">/</span><span class="n">L</span><span class="w">                                            </span><span class="m">0.469</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.002</span><span class="p">)</span><span class="w">   
+</span><span class="n">color</span><span class="o">:</span><span class="w"> </span><span class="n">H</span><span class="o">/</span><span class="n">L</span><span class="w">                                            </span><span class="m">0.602</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.002</span><span class="p">)</span><span class="w">   
+</span><span class="n">color</span><span class="o">:</span><span class="w"> </span><span class="n">G</span><span class="o">/</span><span class="n">L</span><span class="w">                                            </span><span class="m">0.665</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.002</span><span class="p">)</span><span class="w">   
+</span><span class="n">color</span><span class="o">:</span><span class="w"> </span><span class="nb">F</span><span class="o">/</span><span class="n">L</span><span class="w">                                            </span><span class="m">0.723</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.002</span><span class="p">)</span><span class="w">   
+</span><span class="n">color</span><span class="o">:</span><span class="w"> </span><span class="n">E</span><span class="o">/</span><span class="n">L</span><span class="w">                                            </span><span class="m">0.756</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.002</span><span class="p">)</span><span class="w">   
+</span><span class="n">color</span><span class="o">:</span><span class="w"> </span><span class="n">D</span><span class="o">/</span><span class="n">L</span><span class="w">                                            </span><span class="m">0.827</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.002</span><span class="p">)</span><span class="w">   
+</span><span class="n">clarity</span><span class="o">:</span><span class="w"> </span><span class="n">I1</span><span class="w">                                           </span><span class="m">0.301</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.006</span><span class="p">)</span><span class="w">   
+</span><span class="n">clarity</span><span class="o">:</span><span class="w"> </span><span class="n">SI2</span><span class="w">                                          </span><span class="m">0.607</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.006</span><span class="p">)</span><span class="w">   
+</span><span class="n">clarity</span><span class="o">:</span><span class="w"> </span><span class="n">SI1</span><span class="w">                                          </span><span class="m">0.727</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.006</span><span class="p">)</span><span class="w">   
+</span><span class="n">clarity</span><span class="o">:</span><span class="w"> </span><span class="n">VS2</span><span class="w">                                          </span><span class="m">0.836</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.006</span><span class="p">)</span><span class="w">   
+</span><span class="n">clarity</span><span class="o">:</span><span class="w"> </span><span class="n">VS1</span><span class="w">                                          </span><span class="m">0.891</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.006</span><span class="p">)</span><span class="w">   
+</span><span class="n">clarity</span><span class="o">:</span><span class="w"> </span><span class="n">VVS2</span><span class="w">                                         </span><span class="m">0.935</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.006</span><span class="p">)</span><span class="w">   
+</span><span class="n">clarity</span><span class="o">:</span><span class="w"> </span><span class="n">VVS1</span><span class="w">                                         </span><span class="m">0.995</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.006</span><span class="p">)</span><span class="w">   
+</span><span class="n">clarity</span><span class="o">:</span><span class="w"> </span><span class="n">IF</span><span class="w">                                           </span><span class="m">1.052</span><span class="o">***</span><span class="w"> 
+                                                     </span><span class="p">(</span><span class="m">0.006</span><span class="p">)</span><span class="w">   
+</span><span class="o">---------------------------------------------------------------</span><span class="w">
+</span><span class="n">R</span><span class="o">-</span><span class="n">squared</span><span class="w">             </span><span class="m">0.888</span><span class="w">       </span><span class="m">0.892</span><span class="w">      </span><span class="m">0.899</span><span class="w">        </span><span class="m">0.969</span><span class="w">
+</span><span class="n">N</span><span class="w">                </span><span class="m">338946</span><span class="w">      </span><span class="m">338946</span><span class="w">     </span><span class="m">338946</span><span class="w">       </span><span class="m">338946</span><span class="w">    
+</span><span class="o">===============================================================</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Now those are some very nice R-squared values—we are accounting for almost all of the variance in price with the 4Cs.  If we want to know what whether the price for a diamond is reasonable, we can now use this model and exponentiate the result (since we took the log of price).  We need to multiply the result by exp(sigma^2/2), because the our error is no longer zero in expectation:</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align*}
+E(log(y) \mid \mathbf{X} = \mathbf{x}) &= E(\mathbf{X}\beta + \epsilon)\\
+	E(y \mid \mathbf{X} = \mathbf{x}) &= E( exp( \mathbf{X}\beta + \epsilon ) )\\
+	&= E( exp( \mathbf{X}\beta ) \times exp( \epsilon ) ) \\
+	&= E( exp( \mathbf{X}\beta ) ) \times E( exp( \epsilon ) ) \\
+	&= exp(\mathbf{X}\hat\beta) \times exp( \frac{\hat\sigma^2}{2} ) 
+\end{align*} %]]></script>
+
+<p>To dig further into that last step, have a look at the <a href="http://en.wikipedia.org/wiki/Log-normal_distribution#Arithmetic_moments">Wikipedia page on log-normal distributed variables</a>.
+Thanks to <a href="https://sites.google.com/site/miguelgodinhomatos/">Miguel</a> for catching this.
+Let’s take a look at an example from Blue Nile. I’ll use the full model, m4.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="c1"># Example from BlueNile</span><span class="w">
+</span><span class="c1"># Round 1.00 Very Good I VS1 $5,601</span><span class="w">
+</span><span class="n">thisDiamond</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data.frame</span><span class="p">(</span><span class="n">carat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1.00</span><span class="p">,</span><span class="w"> </span><span class="n">cut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'V.Good'</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'I'</span><span class="p">,</span><span class="w"> </span><span class="n">clarity</span><span class="o">=</span><span class="s1">'VS1'</span><span class="p">)</span><span class="w">
+</span><span class="n">modEst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">predict</span><span class="p">(</span><span class="n">m4</span><span class="p">,</span><span class="w"> </span><span class="n">newdata</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">thisDiamond</span><span class="p">,</span><span class="w"> </span><span class="n">interval</span><span class="o">=</span><span class="s1">'prediction'</span><span class="p">,</span><span class="w"> </span><span class="n">level</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">.95</span><span class="p">)</span><span class="w">
+</span><span class="nf">exp</span><span class="p">(</span><span class="n">modEst</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nf">exp</span><span class="p">(</span><span class="n">summary</span><span class="p">(</span><span class="n">m4</span><span class="p">)</span><span class="o">$</span><span class="n">sigma</span><span class="o">^</span><span class="m">2</span><span class="o">/</span><span class="m">2</span><span class="p">)</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The results yield an expected value for price given the characteristics of our diamond and the upper and lower bounds of a 95% CI—note that because this is a linear model, predict() is just multiplying each model coefficient by each value in our data. Turns out that this diamond is a touch pricier than expected value under the full model, though it is by no means outside our 95% CI. BlueNile has by most accounts a better reputation than diamondse.info however, and reputation is worth a lot in a business that relies on easy-to-forge certificates and one in which the non-expert can be easily fooled.</p>
+
+<p>This illustrates an important point about generalizing a model from one data set to another. First, there may be important differences between data sets—as I’ve speculated about above—making the estimates systematically biased. Second, overfitting—our model may be fitting noise present in data set. Even a model cross-validated against out-of-sample predictions can be over-fit to noise that results in differences between data sets. Of course, while this model may give you a sense of whether your diamond is a rip-off against diamondse.info diamonds, it’s not clear that diamondse.info should be regarded as a source of universal truth about whether the price of a diamond is reasonable. Nonetheless, to have the expected price at diamondse.info with a 95% interval is a lot more information than we had about the price we should be willing to pay for a diamond before we started this exercise.</p>
+
+<p>An important point—even though we can predict diamondse.info prices almost perfectly based on a function of the 4c’s, one thing that you should NOT conclude from this exercise is that <em>where</em> you buy your diamond is irrelevant, which apparently used to be conventional wisdom in some circles.  You will almost surely pay more if you <a href="http://www.businessweek.com/articles/2013-05-06/tiffany-vs-dot-costco-which-diamond-ring-is-better">buy the same diamond at Tiffany’s versus Costco</a>.  But <a href="https://web.archive.org/web/20140217105722/http://www.costco.com:80/2.12-ctw-Round-Brilliant-Cut-Internally-Flawless,-D-Color-Diamond-%22Audrey%22-Platinum-Wedding-Set.product.100006730.html">Costco sells some pricy diamonds</a> as well. Regardless, you can use this kind of model to give you an indication of whether you’re overpaying.</p>
+
+<p>Of course, the value of a natural diamond is largely socially constructed. Like money, diamonds are only valuable because society says they are—-there’s no obvious economic efficiencies to be gained or return on investment in a diamond, except perhaps in a very subjective sense concerning your relationship with your significant other. To get a sense for just how much value is socially constructed, you can compare the price of a natural diamond to a synthetic diamond, which thanks to recent technological developments are of comparable quality to a “natural” diamond. Of course, natural diamonds fetch a dramatically higher price.</p>
+
+<p>One last thing—there are few guarantees in life, and I offer none here. Though what we have here seems pretty good, data and models are never infallible, and obviously you can still get taken (or be persuaded to pass on a great deal) based on this model. Always shop with a reputable dealer, and make sure her incentives are aligned against selling you an overpriced diamond or worse one that doesn’t match its certificate. There’s no substitute for establishing a personal connection and lasting business relationship with an established jeweler you can trust.</p>
+
+<h2 id="one-final-consideration">One Final Consideration</h2>
+<hr />
+
+<p>Plotting your data can help you understand it and can yield key insights.  But even scatterplot visualizations can be deceptive if you’re not careful.  Consider another data set the comes with the alr3 package—soil temperature data from Mitchell, Nebraska, collected by Kenneth G. Hubbard from 1976-1992, which I came across in Weisberg, S. (2005). <em>Applied Linear Regression</em>, 3rd edition. New York: Wiley (from which I’ve shamelessly stolen this example).
+Let’s plot the data, naively:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="c1">#install.packages('alr3')</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">alr3</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="p">(</span><span class="n">Mitchell</span><span class="p">)</span><span class="w">
+</span><span class="n">qplot</span><span class="p">(</span><span class="n">Month</span><span class="p">,</span><span class="w"> </span><span class="n">Temp</span><span class="p">,</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Mitchell</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">theme_bw</span><span class="p">()</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><img src="/assets/img/f02902f327e42be253eb2e245e5876de3395060b.png" alt="" /></p>
+
+<p>Looks kinda like noise.  What’s the story here?
+When all else fails, think about it.
+What’s on the X axis?  Month.  What’s on the Y-axis?  Temperature.  Hmm, well there are seasons in Nebraska, so temperature should fluctuate every 12 months.</p>
+
+<p>But we’ve put more than 200 months in a pretty tight space.</p>
+
+<p>Let’s stretch it out and see how it looks:</p>
+
+<p><img src="/assets/img/11fe76cda575e832918edc0bccf89bd911dc04ee.png" alt="" /></p>
+
+<p>Don’t make that mistake.</p>
+
+<p>That concludes part I of this series on scatterplots.  Part II will illustrate the advantages of using facets/panels/small multiples, and show how tools to fit trendlines including linear regression and local regression (loess) can help yield additional insight about your data.</p>
+
+<p>You can also learn more about <a href="https://www.udacity.com/course/ud651">exploratory data analysis via this Udacity course taught by my colleagues Dean Eckles and Moira Burke, and Chris Saden</a>, which will be coming out in the next few weeks.</p>
+
+  </article>
+
+<!-- 
+  
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+      var disqus_shortname  = 'solomonmessing';
+      var disqus_identifier = '/blog/2018/visualization-series-scatterplot-understanding-the-diamond-market';
+      var disqus_title      = '"Know your data - Pricing diamonds using scatterplots and predictive models"';
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  
+ -->
+
+
+
+ 
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+
+var disqus_config = function () {
+this.page.url = '';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = ''; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://solomonmg-github-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+ 
+
+
+
+</div>
+
+      </div>
+    </div>
+
+    <footer>
+
+  <div class="wrapper">
+    &copy; Copyright 2020 Solomon Messing.
+    
+    
+  </div>
+
+</footer>
+
+
+    <!-- Load jQuery -->
+<script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<!-- Load Common JS -->
+<script src="/assets/js/common.js"></script>
+
+
+<!-- Load KaTeX -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js"></script>
+<script src="/assets/js/katex.js"></script>
+
+
+
+
+<!-- Include custom icon fonts -->
+<link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/assets/css/academicons.min.css">
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-27273977-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+
+</html>
